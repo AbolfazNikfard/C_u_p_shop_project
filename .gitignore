@@ -361,6 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/Crops Shop Project/Migrations
+
 *.svg
-/Crops Shop Project/wwwroot/assets/images/product-image
+
+C_u_p_Shop_Project/Migrations/
+C_u_p_Shop_Project/wwwroot/assets/images/product-image/
+
