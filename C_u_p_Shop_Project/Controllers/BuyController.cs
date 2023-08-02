@@ -31,13 +31,14 @@ namespace Crops_Shop_Project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> addToCart(int productID, string number)
         {
+
             #region Validation OF number
             bool isNumber;
             isNumber = int.TryParse(number, out int quntity);
             if (isNumber == false)
             {
-               
-                return StatusCode(403);
+                return Forbid();
+                 //return Request(new{statusCode = 400 , message = "Bad request"});
                 //return RedirectToAction("ProductDetails", "Product", new { productId = productID, addToCartMessage = "Quantity Invalid" });
             }
             #endregion

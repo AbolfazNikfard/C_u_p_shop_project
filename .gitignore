@@ -364,6 +364,6 @@ FodyWeavers.xsd
 
 *.svg
 
-C_u_p_Shop_Project/Migrations/
-C_u_p_Shop_Project/wwwroot/assets/images/product-image/
+/C_u_p_Shop_Project/Migrations/
+/C_u_p_Shop_Project/wwwroot/assets/images/product-image/
 
