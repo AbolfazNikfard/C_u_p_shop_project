@@ -35,7 +35,11 @@ namespace Crops_Shop_Project.Controllers
             bool isNumber;
             isNumber = int.TryParse(number, out int quntity);
             if (isNumber == false)
-                return RedirectToAction("ProductDetails", "Product", new { productId = productID, addToCartMessage = "Quantity Invalid" });
+            {
+               
+                return StatusCode(403);
+                //return RedirectToAction("ProductDetails", "Product", new { productId = productID, addToCartMessage = "Quantity Invalid" });
+            }
             #endregion
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             if (user == null) { return NotFound(); }
