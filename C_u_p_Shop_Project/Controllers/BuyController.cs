@@ -1,6 +1,7 @@
 ﻿using Crops_Shop_Project.Data;
 using Crops_Shop_Project.Enum;
 using Crops_Shop_Project.Models;
+using Crops_Shop_Project.Models.ApiModel;
 using Crops_Shop_Project.Models.View_Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -29,15 +30,15 @@ namespace Crops_Shop_Project.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> addToCart(int productID, string number)
+        public async Task<IActionResult> addToCart([FromBody] addToCart model)
         {
             #region Validation OF number
             bool isNumber;
-            isNumber = int.TryParse(number, out int quntity);
+            isNumber = int.TryParse(model.number, out int quntity);
             if (isNumber == false)
             {
-               
-                return StatusCode(403);
+
+                return Forbid();
                 //return RedirectToAction("ProductDetails", "Product", new { productId = productID, addToCartMessage = "Quantity Invalid" });
             }
             #endregion
@@ -47,7 +48,7 @@ namespace Crops_Shop_Project.Controllers
             var buyer = _context.buyers.SingleOrDefault(b => b.userId == user.Id);
             if (buyer == null) { return NotFound(); }
 
-            var product = _context.products.SingleOrDefault(p => p.id == productID);
+            var product = _context.products.SingleOrDefault(p => p.id == model.productId);
             if (product == null) { return NotFound(); }
 
             if (product.Stock > 0)
@@ -55,7 +56,7 @@ namespace Crops_Shop_Project.Controllers
                 var cartItem = _context.carts.Where(r => r.productId == product.id && r.buyerId == buyer.id).SingleOrDefault();
                 #region Validation
                 if (quntity > product.Stock)
-                    return RedirectToAction("ProductDetails", "Product", new { productId = productID, addToCartMessage = "Not enough" });
+                    return RedirectToAction("ProductDetails", "Product", new { productId = model.productId, addToCartMessage = "Not enough" });
 
                 #endregion
                 if (cartItem == null)
@@ -70,7 +71,7 @@ namespace Crops_Shop_Project.Controllers
                 else
                 {
                     if (cartItem.Number + quntity >= 1000)
-                        return RedirectToAction("ProductDetails", "Product", new { productId = productID, addToCartMessage = "Limit" });
+                        return RedirectToAction("ProductDetails", "Product", new { productId = model.productId, addToCartMessage = "Limit" });
                     cartItem.Number += quntity;
                     _context.carts.Update(cartItem);
 
@@ -78,7 +79,7 @@ namespace Crops_Shop_Project.Controllers
                 _context.SaveChanges();
             }
             else
-                return RedirectToAction("ProductDetails", "Product", new { productId = productID, addToCartMessage = "Not enough" });
+                return RedirectToAction("ProductDetails", "Product", new { productId = model.productId, addToCartMessage = "Not enough" });
 
             return RedirectToAction("Index", "Home", new { addToCartMessage = "Success" });
         }
