@@ -1,0 +1,84 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "ورود";
+}
+<section class="ec-page-content section-space-p">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="section-title">
+                    @if (ViewData["Message"] != null)
+                    {
+                        @if (ViewData["Message"].Equals("Success"))
+                        {
+
+                            <h5 style="color:green">ثبت نام موفقیت آمیز بود لطفا وارد شوید</h5>
+
+                            <br />
+                        }
+                        else
+                        {
+
+                            <h5 style="color:red"> لطفا ابتدا وارد سایت شوید</h5>
+
+                            <br />
+
+                        }
+                    }
+                                      
+                    <h2 class="ec-title">ورود</h2>
+                </div>
+            </div>
+            <div class="ec-login-wrapper">
+                <div class="ec-login-container">
+                    <div class="ec-login-form">
+                        <form asp-action="Login" asp-controller="Account" asp-route-message="@ViewData["Message"]" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                            <span class="ec-login-wrap">
+                                <label asp-for="Email">آدرس ایمیل <span style="color:red">*</span></label>
+                                <input asp-for="Email" placeholder="وارد کردن ایمیل ..." required="">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </span>
+                            <span class="ec-login-wrap">
+                                <label asp-for="Password">کلمه عبور <span style="color:red">*</span></label>
+                                <input asp-for="Password" placeholder="ورود رمزعبور" required="">
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                                @*<input type="checkbox" onclick="myFunction()">نمایش رمز عبور*@
+
+                            </span>
+                            @*<label>نمایش رمز عبور</label>
+                            <input type="checkbox" onclick="ShowORHidePassword()">*@
+                            @*<span class="ec-login-wrap ec-login-fp">
+                            <label><a href="#">فراموشی رمز عبور?</a></label>
+                            </span>*@
+                            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                            @if (ViewData["ErrorMessage"] != null)
+                            {
+                                <div class="text-danger">@ViewData["ErrorMessage"]</div>
+                            }
+                            <span class="ec-login-wrap ec-login-btn">
+                                <button class="btn btn-primary" type="submit">ورود</button>
+                                <a asp-controller="Account" asp-action="Register" class="btn btn-secondary">ثبت نام</a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function ShowORHidePassword() {
+            var x = document.getElementById("password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
+</section>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

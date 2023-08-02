@@ -1,0 +1,352 @@
+﻿@inject SignInManager<User> SignInManager
+@model ProductDetailViewModel
+@{
+    ViewData["Title"] = "جزییات محصول";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ulong ShowReadablePrice;
+}
+<!-- Ec breadcrumb start -->
+<div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row ec_breadcrumb_inner">
+                    <div class="col-md-6 col-sm-12">
+                        <h2 class="ec-breadcrumb-title">محصول </h2>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Ec breadcrumb end -->
+<section class="ec-page-content section-space-p product_page">
+    <div class="container">
+        <div class="row">
+            <div class="ec-pro-rightside ec-common-rightside col-lg-9 order-lg-last col-md-12 order-md-first">
+                <!-- Single product content Start -->
+                <div class="single-pro-block">
+                    <div class="single-pro-inner">
+                        <div class="row">
+                            <div class="single-pro-img">
+                                <div class="single-product-scroll">
+                                    <div class="single-product-cover">
+                                        <div class="single-slide zoom-image-hover">
+                                            <img style="width:350px;height:350px" class="img-responsive" src="~/assets/images/product-image/@(Model.product.productImage)" alt="عکس محصول">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="single-pro-desc">
+                                <div class="single-pro-content">
+                                    <h5 class="ec-single-title">@Model.product.Name</h5>
+                                    <div class="ec-single-rating-wrap">
+                                        <div class="ec-single-rating" style="border-left:none">
+                                            <i class="ecicon eci-star fill"></i>
+                                            <i class="ecicon eci-star fill"></i>
+                                            <i class="ecicon eci-star fill"></i>
+                                            <i class="ecicon eci-star fill"></i>
+                                            <i class="ecicon eci-star fill"></i>
+                                        </div>
+
+                                    </div>
+                                    @* <div class="ec-single-desc">
+                                    @Model.Description
+                                    </div>*@
+
+
+                                    <div class="ec-single-price-stoke">
+                                        <div class="ec-single-price">
+                                            <span class="ec-single-ps-title">قیمت :</span>
+                                            <span>
+                                                @* @Model.product.Weight
+                                                @if (Model.product.WeightMassUnit == UnitOFMassMeasurement.Gram)
+                                                {
+                                                    <span>گرم</span>
+                                                }
+                                                else if (Model.product.WeightMassUnit == UnitOFMassMeasurement.Kg)
+                                                {
+                                                    <span>کیلوگرم</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>تن</span>
+                                                } *@
+                                                @{
+                                                    ShowReadablePrice = (ulong)Model.product.Price;
+                                                }
+                                                <span class="new-price">@ShowReadablePrice.ToMoreReadable() تومان</span>
+                                            </span>
+                                        </div>
+                                        <div class="ec-single-stoke">
+                                            @*<span class="ec-single-ps-title">در انبار</span>*@
+                                            <span class="ec-single-sku">شناسه محصول: @Model.product.id#</span>
+                                        </div>
+                                    </div>
+
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        if (User.IsInRole("Buyer"))
+                                        {
+                                           
+
+                                                @if (Model.product.Stock >= 10)
+                                                {
+                                                     <div class="ec-single-qty">
+                                                        @* <form asp-controller="Buy" asp-action="addToCart" asp-route-productID="@Model.product.id" method="post"> *@
+                                                        
+                                                        <div class="qty-plus-minus">
+                                                            <div class="dec ec_qtybtn">-</div>
+                                                            <input class="qty-input" type="text" maxlength="2" value="1" readonly>
+                                                            <div class="inc ec_qtybtn">+</div>
+                                                        </div>
+                                                        @* <div class="ec-single-cart ">
+                                                            <button type="submit" class="btn btn-primary">افزودن به سبد خرید</button>
+                                                        </div> *@
+                                                        <button id="show-message-box" class="btn btn-primary">show</button>
+                                                        <div class="message-box" id="messageBox">
+                                                            <span>موجودی محصول کافی نیست</span>
+                                                            <button class="close-button" id="closeButton"></button>
+                                                        </div>
+                                                        
+
+                                                        <div class="ec-single-wishlist">
+                                                            <a class="ec-btn-group wishlist" title="علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
+                                                        </div>
+                                                        @* <div class="ec-single-quickview">
+                                                            <a href="#" class="ec-btn-group quickview" data-link-action="quickview" title="مشاهده" data-bs-toggle="modal" data-bs-target="#ec_quickview_modal"><img src="assets/images/icons/quickview.svg" class="svg_img pro_svg" alt=""></a>
+                                                        </div> *@
+                                                        @* </form> *@
+                                                     </div>
+                                                }
+                                                else if(0 < Model.product.Stock && Model.product.Stock < 10)
+                                                {
+                                                    <div class="ec-single-qty">
+                                                        @* <form asp-controller="Buy" asp-action="addToCart" asp-route-productID="@Model.product.id" method="post"> *@
+                                                        
+                                                        <div class="qty-plus-minus">
+                                                            <div class="dec ec_qtybtn">-</div>
+                                                            <input class="qty-input" type="text" maxlength="2" value="1" readonly>
+                                                            <div class="inc ec_qtybtn">+</div>
+                                                        </div>
+                                                       @* <div class="ec-single-cart ">
+                                                            <button type="submit" class="btn btn-primary">افزودن به سبد خرید</button>
+                                                        </div> *@
+                                                        <button id="show-message-box" class="btn btn-primary">show</button>
+                                                        <div class="message-box" id="messageBox">
+                                                            <span style="margin:20px;">کالا با موفقیت به سبد خرید شما افزوده شد</span>
+                                                            <button class="close-button" id="closeButton"></button>
+                                                        </div>
+                                                        <div class="ec-single-wishlist">
+                                                            <a class="ec-btn-group wishlist" title="علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
+                                                        </div>
+                                                    </div>
+
+                                                    <b><span style="color: red;">تنها @Model.product.Stock عدد در انبار باقیمانده است</span></b><br><br>   
+                                                }
+                                                else
+                                                {
+                                                    <b><span style="color: red;">ناموجود</span></b><br><br>
+                                                }
+                                           
+                                            @if (ViewData["Message"].Equals("Quantity Invalid"))
+                                            {
+                                                <span style="color:red">تعداد محصول انتخاب شده معتبر نیست</span>
+
+                                                <br />
+                                            }
+                                            else if (ViewData["Message"].Equals("Not enough"))
+                                            {
+                                                <span style="color:red">موجودی محصول کافی نیست</span>
+
+                                                <br />
+                                            }
+                                            else if (ViewData["Message"].Equals("Not enough"))
+                                            {
+                                                <span style="color:red">تعداد محصول انتخاب شده محدود است</span>
+
+                                                <br />
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="ec-single-qty">
+                                            @if (Model.product.Stock > 0)
+                                            {
+                                                @* <form asp-controller="Buy" asp-action="addToCart" asp-route-productID="@Model.product.id" method="post"> *@
+                                                    <div class="qty-plus-minus">
+                                                        <div class="dec ec_qtybtn">-</div>
+                                                        <input class="qty-input" type="text" maxlength="2" value="1" readonly>
+                                                        <div class="inc ec_qtybtn">+</div>
+                                                    </div>
+                                                    <div class="ec-single-cart ">
+                                                        <button type="submit" class="btn btn-primary">افزودن به سبد خرید</button>
+                                                    </div>
+                                                    <div class="ec-single-wishlist">
+                                                        <a class="ec-btn-group wishlist" title="علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
+                                                    </div>
+                                                    @* <div class="ec-single-quickview">
+                                                        <a href="#" class="ec-btn-group quickview" data-link-action="quickview" title="مشاهده" data-bs-toggle="modal" data-bs-target="#ec_quickview_modal"><img src="~/assets/images/icons/quickview.svg" class="svg_img pro_svg" alt=""></a>
+                                                    </div> *@
+                                                @* </form> *@
+                                            }
+                                            else
+                                            {
+                                                <div class="ec-single-cart ">
+                                                    <a href="#"><button style="color:red" class="btn">ناموجود </button></a>
+                                                </div>
+                                            }
+                                        </div>
+                                        @if (ViewData["Message"].Equals("Quantity Invalid"))
+                                        {
+                                            <span style="color:red">تعداد محصول انتخاب شده معتبر نیست</span>
+
+                                            <br />
+                                        }
+                                        else if (ViewData["Message"].Equals("Not enough"))
+                                        {
+                                            <span style="color:red">موجودی محصول کافی نیست</span>
+
+                                            <br />
+                                        }
+                                        else if (ViewData["Message"].Equals("Not enough"))
+                                        {
+                                            <span style="color:red">تعداد محصول انتخاب شده محدود است</span>
+
+                                            <br />
+                                        }
+                                    }
+                                    <div class="ec-single-social">
+                                        <ul class="mb-0">
+                                            <li class="list-inline-item facebook"><a href="#"><i class="ecicon eci-facebook"></i></a></li>
+                                            <li class="list-inline-item twitter"><a href="#"><i class="ecicon eci-twitter"></i></a></li>
+                                            <li class="list-inline-item instagram"><a href="#"><i class="ecicon eci-instagram"></i></a></li>
+                                            <li class="list-inline-item youtube-play"><a href="#"><i class="ecicon eci-youtube-play"></i></a></li>
+                                            <li class="list-inline-item behance"><a href="#"><i class="ecicon eci-behance"></i></a></li>
+                                            <li class="list-inline-item whatsapp"><a href="#"><i class="ecicon eci-whatsapp"></i></a></li>
+                                            <li class="list-inline-item plus"><a href="#"><i class="ecicon eci-plus"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Single product content End -->
+                <!-- Single product tab start -->
+                <div class="ec-single-pro-tab">
+                    <div class="ec-single-pro-tab-wrapper">
+                        <div class="ec-single-pro-tab-nav">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-details" role="tablist">توضیحات محصول</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-info" role="tablist">اطلاعات بیشتر</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-review" role="tablist">نظرات</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content  ec-single-pro-tab-content">
+                            <div id="ec-spt-nav-details" class="tab-pane fade show active">
+                                <div class="ec-single-pro-tab-desc">
+                                    <p> @Model.product.Description</p>
+                                </div>
+                            </div>
+                            <div id="ec-spt-nav-info" class="tab-pane fade">
+                                <div class="ec-single-pro-tab-moreinfo">
+                                    <ul>
+                                        @* <li>
+                                            <span>وزن</span> @Model.product.Weight
+                                            @if (Model.product.WeightMassUnit == UnitOFMassMeasurement.Gram)
+                                            {
+                                                <span>گرم</span>
+                                            }
+                                            else if (Model.product.WeightMassUnit == UnitOFMassMeasurement.Kg)
+                                            {
+                                                <span>کیلوگرم</span>
+                                            }
+                                            else
+                                            {
+                                                <span>تن</span>
+                                            }
+                                        </li> *@
+                                        <li>
+                                            <span>موجودی</span> @Model.product.Stock
+                                            @* @if (Model.product.StockMassUnit == UnitOFMassMeasurement.Gram)
+                                            {
+                                                <span>گرم</span>
+                                            }
+                                            else if (Model.product.StockMassUnit == UnitOFMassMeasurement.Kg)
+                                            {
+                                                <span>کیلوگرم</span>
+                                            }
+                                            else
+                                            {
+                                                <span>تن</span>
+                                            } *@
+                                        </li>
+                                        @* <li>
+                                            <span>فروشنده</span> @Model.seller
+                                        </li> *@
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div id="ec-spt-nav-review" class="tab-pane fade">
+                                <div class="row">
+                                    @foreach (var comment in Model.comments)
+                                    {
+                                        <div class="ec-t-review-wrapper">
+                                            <div class="ec-t-review-item">
+
+                                                <div class="ec-t-review-content">
+                                                    <div class="ec-t-review-top">
+                                                        <div class="ec-t-review-name">@comment.userName</div>
+                                                        <div class="ec-t-review-rating">
+                                                            <i class="ecicon eci-star fill"></i>
+                                                            <i class="ecicon eci-star fill"></i>
+                                                            <i class="ecicon eci-star fill"></i>
+                                                            <i class="ecicon eci-star fill"></i>
+                                                            <i class="ecicon eci-star fill"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ec-t-review-bottom">
+                                                        <p>@comment.comment</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="ec-ratting-content">
+                                        <h3>افزودن نظر</h3>
+                                        <div class="ec-ratting-form">
+                                            <form asp-controller="Comment" asp-action="addComment" asp-route-productId="@Model.product.id" asp-route-userName="@User.Identity.Name" method="post">
+                                                <div class="ec-ratting-input form-submit">
+                                                    <textarea id="Comment" name="Comment" placeholder="نظر شما"></textarea>
+                                                    <button class="btn btn-primary" type="submit" value="Submit">ثبت نظر</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- product details description area end -->
+            </div>
+            <!-- Sidebar Area Start -->
+            @await Component.InvokeAsync("ShowGroups","Sidebar")
+            <!-- Sidebar Area End -->
+        </div>
+    </div>
+</section>
+

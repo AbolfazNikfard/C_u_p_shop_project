@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewData["Title"] = "ارتباط با ما";
+}
+
+<section class="ec-page-content section-space-p">
+    <div class="container">
+        <div class="row">
+            <div class="ec-common-wrapper">
+                <div class="ec-contact-leftside">
+                    <div class="ec-contact-container">
+                        <div class="ec-contact-form">
+                            <form action="#" method="post">
+                                <span class="ec-contact-wrap">
+                                    <label>نام *</label>
+                                    <input type="text" name="firstname" placeholder="نام خود را وارد کنید" required="">
+                                </span>
+                                <span class="ec-contact-wrap">
+                                    <label> نام خانوادگی *</label>
+                                    <input type="text" name="lastname" placeholder="نام خانوادگی خود را وارد کنید" required="">
+                                </span>
+                                <span class="ec-contact-wrap">
+                                    <label>ایمیل*</label>
+                                    <input type="email" name="email" placeholder="ورود آدرس ایمیل" required="">
+                                </span>
+                                <span class="ec-contact-wrap">
+                                    <label>شماره تماس*</label>
+                                    <input type="text" name="phonenumber" placeholder="شماره تماس خود را وارد کنید" required="">
+                                </span>
+                                <span class="ec-contact-wrap">
+                                    <label>نظرات/ سوال*</label>
+                                    <textarea name="address" placeholder="لطفا نظرات خود را اینجا بیان کنید.."></textarea>
+                                </span>
+                               @* <span class="ec-contact-wrap ec-recaptcha">
+                                    <span class="g-recaptcha" data-sitekey="6LfKURIUAAAAAO50vlwWZkyK_G2ywqE52NU7YO0S" data-callback="verifyRecaptchaCallback" data-expired-callback="expiredRecaptchaCallback"></span>
+                                    <input class="form-control d-none" data-recaptcha="true" required="" data-error="Please complete the Captcha">
+                                    <span class="help-block with-errors"></span>
+                                </span>*@
+                                <span class="ec-contact-wrap ec-contact-btn">
+                                    <button class="btn btn-primary" type="submit">ارسال</button>
+                                </span>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="ec-contact-rightside">
+                    <div class="ec_contact_map">
+                        @*<div class="ec_map_canvas">
+                            <iframe id="ec_map_canvas" src="assets/maps/embed.html?pb=!1m10!1m8!1m3!1d71263.65594328841!2d144.93151478652146!3d-37.8734290780509!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1615963387757!5m2!1sen!2sus"></iframe>
+                            <a href="assets/view/maps-api-v2/mapv2.html"></a>
+                        </div>*@
+                    </div>
+                    <div class="ec_contact_info">
+                        <h1 class="ec_contact_info_head">ارتباط با ما</h1>
+                        <ul class="align-items-center">
+                            <li class="ec-contact-item"><i class="ecicon eci-map-marker" aria-hidden="true"></i><span>آدرس:</span>شهر- خیابان - کوچه - پلاک</li>
+                            <li class="ec-contact-item align-items-center">
+                                <i class="ecicon eci-phone" aria-hidden="true"></i><span>تماس با ما:</span><a href="tel:+05136666666">
+                                    +05136666666
+                                </a>
+                            </li>
+                            <li class="ec-contact-item align-items-center"><i class="ecicon eci-envelope" aria-hidden="true"></i><span>ایمیل :</span><a href="/cdn-cgi/l/email-protection#b6d3ced7dbc6dad3f6d3d59bd3dbd7dfda98d5d9db"><span class="__cf_email__" data-cfemail="dcb9a4bdb1acb0b99cb9bff1b9b1bdb5b0f2bfb3b1">[email&#160;protected]</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

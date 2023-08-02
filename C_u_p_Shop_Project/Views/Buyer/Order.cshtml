@@ -1,0 +1,108 @@
+﻿@model List<OrderViewModel>
+@{
+    ViewData["Title"] = "تاریخچه خریدها ";
+}
+@{
+    ulong ShowReadablePrice;
+}
+<!-- Ec breadcrumb start -->
+<div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row ec_breadcrumb_inner">
+                    <div class="col-md-6 col-sm-12">
+                        <h2 class="ec-breadcrumb-title">تاریخچه سفارشات</h2>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <!-- ec-breadcrumb-list start -->
+                        <ul class="ec-breadcrumb-list">
+                            @*<li class="ec-breadcrumb-item"><a href="index.html">خانه</a></li>
+                            <li class="ec-breadcrumb-item active">تاریخچه</li>*@
+                        </ul>
+                        <!-- ec-breadcrumb-list end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Ec breadcrumb end -->
+<!-- User history section -->
+<section class="ec-page-content ec-vendor-uploads ec-user-account section-space-p">
+    <div class="container">
+        <div class="row">
+            <partial name="_buyerSidbarPanel"></partial>
+            <div class="ec-shop-rightside col-lg-9 col-md-12">
+                <div class="ec-vendor-dashboard-card">
+                    <div class="ec-vendor-card-header">
+                        <h5>تاریخچه خرید</h5>
+                        @*<div class="ec-header-btn">
+                        <a class="btn btn-lg btn-primary" href="#">خرید </a>
+                        </div>*@
+                    </div>
+                    <div class="ec-vendor-card-body">
+                        @if (Model.Count == 0)
+                        {
+                            <h4>شما تاکنون خرید نداشته اید</h4>
+                        }
+                        else
+                        {
+                            <div class="ec-vendor-card-table">
+                                <table class="table ec-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">شناسه</th>
+                                            <th scope="col">تصویر</th>
+                                            <th scope="col">نام</th>
+                                            <th scope="col">وزن</th>
+                                            <th scope="col">تعداد</th>
+                                            <th scope="col">قیمت(تومان)</th>
+                                            <th scope="col">تاریخ</th>
+                                            <th scope="col">فعالیت</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var order in Model)
+                                        {
+                                            <tr>
+                                                <th scope="row"><span>@order.productId</span></th>
+                                                <td><img class="prod-img" src="~/assets/images/product-image/@(order.productImage)" alt="عکس محصول"></td>
+                                                <td><span>@order.productName</span></td>
+                                                <td>
+                                                    <span>
+                                                        @order.Weight
+                                                        @if (order.WeightMassUnit == UnitOFMassMeasurement.Gram)
+                                                        {
+                                                            <span>گرم</span>
+                                                        }
+                                                        else if (order.WeightMassUnit == UnitOFMassMeasurement.Kg)
+                                                        {
+                                                            <span>کیلوگرم</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>تن</span>
+                                                        }
+                                                    </span>
+                                                </td>
+                                                <td><span>@order.Number</span></td>
+                                                @{
+                                                    ShowReadablePrice = (ulong)order.Price;
+                                                }
+                                                <td><span>@ShowReadablePrice.ToMoreReadable()</span></td>
+                                                <td><span>@order.orderDate</span></td>
+                                                <td><span class="tbl-btn"><a asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@order.productId" class="btn btn-lg btn-primary">مشاهده</a></span></td>
+                                            </tr>
+                                        }
+
+                                </table>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

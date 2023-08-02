@@ -1,0 +1,59 @@
+﻿@model EditSubGroupViewModel
+@{
+    ViewData["Title"] = "EditsubGroup";
+    Layout = "~/Views/Shared/AdminPanel.cshtml";
+}
+<div class="ec-content-wrapper">
+    <div class="content">
+        <div class="breadcrumb-wrapper breadcrumb-wrapper-2 breadcrumb-contacts">
+            <h1>دسته‌بندی‌ فرعی</h1>
+            <p class="breadcrumbs">
+                <span><a asp-controller="Admin" asp-action="Index">پنل</a></span> <span>
+                    <i class="mdi mdi-chevron-left"></i>
+                </span>ویرایش دسته بندی فرعی
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 col-lg-12">
+                <div class="ec-cat-list card card-default mb-24px">
+                    <div class="card-body">
+                        <div class="ec-cat-form">
+                            <h4> ویرایش </h4>
+                            <form asp-controller="Admin" asp-action="EditSubGroup" method="post">
+                                <input asp-for="@Model.subGroupId" type="hidden"/>
+                                <div class="form-group row">
+                                    <label for="text"
+                                           class="col-12 col-form-label">نام زیرگروه</label>
+                                    <div class="col-12">
+                                        <input asp-for="@Model.subgroupName" class="form-control here slug-title">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="parent-category"
+                                           class="col-12 col-form-label">دسته بندی والد</label>
+                                    <div class="col-12">
+
+                                        <select asp-for="@Model.parentGroupId" class="custom-select">
+                                            @foreach (var group in Model.groups)
+                                            {
+                                                <option value="@group.id">@group.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button name="submit" type="submit"
+                                                class="btn btn-primary">
+                                            ارسال
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

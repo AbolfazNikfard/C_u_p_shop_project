@@ -1,0 +1,124 @@
+﻿<div class="ec-left-sidebar ec-bg-sidebar">
+    <div id="sidebar" class="sidebar ec-sidebar-footer">
+        <div class="ec-navigation" data-simplebar>
+            <ul class="nav sidebar-inner" id="sidebar-menu">
+                <li class="active">
+                    <a asp-controller="Admin" asp-action="Index" class="sidenav-item-link">
+                        <i class="mdi mdi-view-dashboard-outline"></i> <span class="nav-text">داشبرد</span>
+                    </a>
+                    <hr>
+                </li>
+                @* <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)">
+                        <i class="mdi mdi-account-group-outline"></i> <span class="nav-text">فروشندگان</span> <b class="caret"></b>
+                    </a>
+                    <div class="collapse">
+                        <ul class="sub-menu" id="vendors" data-parent="#sidebar-menu">
+                            <li>
+                                <a asp-controller="Admin" asp-action="SellerList" class="sidenav-item-link">
+                                    <span class="nav-text">لیست فروشندگان</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li> *@
+                <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)">
+                        <i class="mdi mdi-account-group"></i> <span class="nav-text">خریداران</span> <b class="caret"></b>
+                    </a>
+                    <div class="collapse">
+                        <ul class="sub-menu" id="users" data-parent="#sidebar-menu">
+                            <li>
+                                <a asp-controller="Admin" asp-action="BuyerList" class="sidenav-item-link">
+                                    <span class="nav-text">لیست کاربران</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <hr>
+                </li>
+                <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)">
+                        <i class="mdi mdi-dns-outline"></i> <span class="nav-text">دسته‌بندی‌ها</span> <b class="caret"></b>
+                    </a>
+                    <div class="collapse">
+                        <ul class="sub-menu" id="categorys" data-parent="#sidebar-menu">
+                            <li>
+                                <a asp-controller="Admin" asp-action="addGroup" class="sidenav-item-link">
+                                    <span class="nav-text">دسته‌بندی‌ اصلی</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Admin" asp-action="addSubGroup" class="sidenav-item-link">
+                                    <span class="nav-text">دسته‌بندی‌ فرعی</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)">
+                        <i class="mdi mdi-cart"></i> <span class="nav-text">محصولات</span> <b class="caret"></b>
+                    </a>
+                    <div class="collapse">
+                        <ul class="sub-menu" id="products" data-parent="#sidebar-menu">
+                            @* <li>
+                                <a asp-controller="Admin" asp-action="PendingProducts" class="sidenav-item-link">
+                                    <span>محصولات در انتظار تایید</span>
+                                </a>
+                            </li> *@
+                            <li>
+                                <a asp-controller="AddProduct" asp-action="addProduct" asp-route-message="Add" class="sidenav-item-link">
+                                    <span class="nav-text">افزودن محصول</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="AddProduct" asp-action="ProductList" class="sidenav-item-link">
+                                    <span class="nav-text">لیست محصولات</span>
+                                </a>
+                            </li>                                                        
+                        </ul>
+                    </div>
+                </li>
+                <li class="has-sub">
+                    <a class="sidenav-item-link" href="#">
+                        <i class="mdi mdi-table-large"></i> <span class="nav-text">گزارشات جدولی</span> <b class="caret"></b>
+                    </a>
+                    <div class="collapse">
+                        <ul class="sub-menu" id="orders" data-parent="#sidebar-menu">
+                            <li>
+                                <a asp-controller="Reports" asp-action="SoldProducts" class="sidenav-item-link">
+                                    <span class="nav-text">تاریخچه سفارشات</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Reports" asp-action="SoldPerProduct" class="sidenav-item-link">
+                                    <span >فروش بر اساس محصول</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="has-sub">
+                    <a class="sidenav-item-link" href="#">
+                        <i class="mdi mdi-chart-bar"></i> <span class="nav-text">گزارشات گرافیکی</span> <b class="caret"></b>
+                    </a>
+                    <div class="collapse">
+                        <ul class="sub-menu" id="orders" data-parent="#sidebar-menu">
+                            <li>
+                                <a asp-controller="Reports" asp-action="SoldChart" class="sidenav-item-link">
+                                    <span class="nav-text">فروش</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Reports" asp-action="bestSellingProducts" class="sidenav-item-link">
+                                    <span>پرفروشترین محصولات</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

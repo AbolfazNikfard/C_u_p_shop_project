@@ -1,0 +1,28 @@
+﻿@model List<GroupAndSubGroupViewModel>
+@*@{
+    ViewData["Title"] = "ShowCategories";
+}*@
+<ul class="mega-menu d-block">
+    <li class="d-flex">
+        @foreach (var groups in Model)
+        {
+            <ul class="d-block">
+                <li class="menu_title"><a asp-controller="Product" asp-action="ShowProductByGroupId" asp-route-id="@groups.groupId">@groups.groupName</a></li>
+                @foreach (var subgroups in groups.subGroops)
+                {
+                    <li>
+                        <a asp-controller="Product" asp-action="ShowProductBySubGroupId" asp-route-id="@subgroups.id">@subgroups.Name</a>
+                    </li>
+                }
+            </ul>
+        }
+    </li>
+    @*<li>
+        <ul class="ec-main-banner w-100">
+            <li><a class="p-0" href="shop-left-sidebar-col-3.html"><img class="img-responsive" src="~/assets/images/menu-banner/1.jpg" alt=""></a></li>
+            <li><a class="p-0" href="shop-left-sidebar-col-4.html"><img class="img-responsive" src="~/assets/images/menu-banner/2.jpg" alt=""></a></li>
+            <li><a class="p-0" href="shop-right-sidebar-col-3.html"><img class="img-responsive" src="~/assets/images/menu-banner/3.jpg" alt=""></a></li>
+            <li><a class="p-0" href="shop-right-sidebar-col-4.html"><img class="img-responsive" src="~/assets/images/menu-banner/4.jpg" alt=""></a></li>
+        </ul>
+    </li>*@
+</ul>

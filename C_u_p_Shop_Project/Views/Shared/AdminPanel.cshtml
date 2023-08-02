@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="کراپشاپ - داشبرد مدیریتی فروشگاهی اچ تی ام ال">
+    @if (User.IsInRole("Seller"))
+    {
+        <title>کراپشاپ - پنل فروشنده</title>
+    }
+    else
+    {
+    <title>کراپشاپ - پنل ادمین</title>
+    }    
+
+    <!--Data Table-->
+    <link href="~/AdminPanel/assets/plugins/data-tables/datatables.bootstrap5.min.css" rel="stylesheet">
+    <link href="~/AdminPanel/assets/plugins/data-tables/responsive.datatables.min.css" rel="stylesheet">
+    <!--Data Table End-->
+    <link href="~/AdminPanel/assets/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="~/AdminPanel/assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="~/AdminPanel/assets/plugins/simplebar/simplebar.css" rel="stylesheet">
+    <link id="ekka-css" href="~/AdminPanel/assets/css/ekka.css" rel="stylesheet">
+
+</head>
+
+<body class="ec-header-fixed ec-sidebar-fixed ec-sidebar-light ec-header-light" id="body">
+    <div class="wrapper">
+        <div class="ec-page-wrapper">
+            @if (User.IsInRole("Seller"))
+            {
+                <partial name="_SellerSidebarPanel"></partial>
+            }
+            else if (User.IsInRole("Admin"))
+            {
+                <partial name="_AdminSidebarPanel"></partial>
+            }
+            <header class="ec-main-header" id="header">
+                <nav class="navbar navbar-static-top navbar-expand-lg">
+                    <button id="sidebar-toggler"
+                            class="sidebar-toggle"></button>
+                    <div class="search-form d-lg-inline-block">
+                        <div class="input-group">
+                            <input name="query" id="search-input" class="form-control"
+                                   placeholder="جستجو..." autofocus autocomplete="off"> <button type="button" name="search"
+                                                                                                id="search-btn" class="btn btn-flat">
+                                <i class="mdi mdi-magnify"></i>
+                            </button>
+                        </div>
+                        <div id="search-results-container">
+                            <ul id="search-results"></ul>
+                        </div>
+                    </div>
+                    <div class="navbar-right">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown user-menu">
+                                <button class="dropdown-toggle nav-link ec-drop"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="~/assets/images/user/user-image.jpg"
+                                         class="user-image" alt="User Image">
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right ec-dropdown-menu">
+                                    <li class="dropdown-header">
+                                        <img src="~/assets/images/user/user-image.jpg" class="img-circle"
+                                             alt="User Image">
+                                        <div class="d-inline-block">
+                                            @if (User.IsInRole("Seller"))
+                                            {
+                                                <span>فروشنده</span>
+                                            }
+                                            else
+                                            {
+                                                <span>ادمین</span>
+                                            }
+                                            <small class="pt-1">
+                                                <a class="__cf_email__">@User.Identity.Name</a>
+                                            </small>
+                                        </div>
+                                    </li>
+                                    <li><a href="user-profile.html"><i class="mdi mdi-account"></i>پروفایل من </a></li>
+                                    <li><a href="#"><i class="mdi mdi-email"></i> پیام </a></li>
+                                    @*<li><a href="#"><i class="mdi mdi-diamond-stone"></i> پروژه ها</a></li>*@
+                                    <li class="right-sidebar-in">
+                                        <a href="javascript:0">
+                                            <i class="mdi mdi-settings-outline"></i> تنظیمات
+                                        </a>
+                                    </li>
+                                    <form asp-controller="Account" asp-action="LogOut" method="post">
+                                    <li class="dropdown-footer"><a><i class="mdi mdi-logout"></i> <button type="submit">خروج </button></a></li>
+                                    </form>
+                                </ul>
+                            </li>
+                            <!-- <li>Notifications</li>-->
+                            <li class="right-sidebar-in right-sidebar-2-menu">
+                                <i class="mdi mdi-settings-outline mdi-spin"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+            <div>
+                @RenderBody()
+            </div>
+            <footer class="footer mt-auto">
+                <div class="copyright bg-white">
+                    <p>
+                        &copy;  کپی رایت  <a class="text-primary"
+                                             href=" " target="_blank"> داشبرد مدیریتی کراپشاپ </a>.
+                        همه حقوق محفوظ است.
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script data-cfasync="false" src="~/AdminPanel/assets/plugins/cloudflare-static/email-decode.min.js"></script>
+    <script src="~/AdminPanel/assets/plugins/jquery/jquery-3.5.1.min.js"></script>
+    <script src="~/AdminPanel/assets/plugins/jquery/jquery.notify.min.js"></script>
+    <script src="~/AdminPanel/assets/plugins/jquery/jquery.bundle.notify.min.js"></script>
+    <script src="~/AdminPanel/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/AdminPanel/assets/plugins/simplebar/simplebar.min.js"></script>
+    <script src="~/AdminPanel/assets/plugins/jquery-zoom/jquery.zoom.min.js"></script>
+    <script src="~/AdminPanel/assets/plugins/slick/slick.min.js"></script>
+    <script src="~/AdminPanel/assets/plugins/charts/Chart.min.js"></script>
+    @*<script src="~/AdminPanel/assets/js/chart.js"></script>*@
+    <script src="~/AdminPanel/assets/plugins/charts/google-map-loader.js"></script>
+    <script src="~/AdminPanel/assets/plugins/charts/google-map.js"></script>
+
+    <script src="~/AdminPanel/assets/plugins/daterangepicker/moment.min.js"></script>
+
+    <script src="~/AdminPanel/assets/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src='~/AdminPanel/assets/plugins/daterangepicker/moment-jalaali.js'></script>
+    <script src="~/AdminPanel/assets/plugins/daterangepicker/fa.js"></script>
+    <script src="~/AdminPanel/assets/js/date-range.js"></script>
+    <script src="~/AdminPanel/assets/plugins/options-sidebar/optionswitcher.js"></script>
+    <script src="~/AdminPanel/assets/js/ekka.js"></script>
+
+    <!--DataTableJs-->
+    <script src="~/AdminPanel/assets/plugins/data-tables/jquery.datatables.min.js"></script>
+    <script src="~/AdminPanel/assets/plugins/data-tables/datatables.bootstrap5.min.js"></script>
+    <script src="~/AdminPanel/assets/plugins/data-tables/datatables.responsive.min.js"></script>
+    <!--DataTableJsEnd-->
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

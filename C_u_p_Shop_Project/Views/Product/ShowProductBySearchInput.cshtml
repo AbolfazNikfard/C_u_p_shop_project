@@ -1,0 +1,6 @@
+﻿@model ShowProductByGroupComponentViewModel
+@{
+    ViewData["Title"] = "ShowProductBySearchInput";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@await Component.InvokeAsync("ShowProductByGroupComponent",Model)

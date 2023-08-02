@@ -1,0 +1,109 @@
+﻿@* @model List<Product>
+@{
+    ViewData["Title"] = "PendingProducts";
+    Layout = "~/Views/Shared/AdminPanel.cshtml";
+    ulong ShowReadablePrice;
+}
+<div class="ec-content-wrapper">
+    <div class="content">
+        <div class="breadcrumb-wrapper d-flex align-items-center justify-content-between">
+            <div>
+                <h1>محصولات درانتظار تایید</h1>
+                <p class="breadcrumbs">
+                </p>
+            </div>           
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-default">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="responsive-data-table" class="table" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>شناسه</th>
+                                        <th>محصول</th>
+                                        <th>نام</th>
+                                        <th>وزن</th>
+                                        <th>قیمت(تومان)</th>
+                                        <th>موجودی</th>                                        
+                                        <th>تاریخ ثبت</th>
+                                        <th>فعالیت</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>@Model[i].id</td>
+                                            <td>
+                                                <img class="tbl-thumb" src="~/assets/images/product-image/@(Model[i].productImage)"
+                                                 alt="Product Image">
+                                            </td>
+                                            <td>@Model[i].Name</td>
+                                            <td>
+                                                @Model[i].Weight
+                                                @if (Model[i].WeightMassUnit == UnitOFMassMeasurement.Gram)
+                                                {
+                                                    <span>گرم</span>
+                                                }
+                                                else if (Model[i].WeightMassUnit == UnitOFMassMeasurement.Kg)
+                                                {
+                                                    <span>کیلوگرم</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>تن</span>
+                                                }
+                                            </td>
+                                            @{
+                                                ShowReadablePrice = (ulong)Model[i].Price;
+                                            }
+                                            <td>@ShowReadablePrice.ToMoreReadable()</td>
+                                            <td>
+                                                @Model[i].Stock
+                                                @if (Model[i].StockMassUnit == UnitOFMassMeasurement.Gram)
+                                                {
+                                                    <span>گرم</span>
+                                                }
+                                                else if (Model[i].StockMassUnit == UnitOFMassMeasurement.Kg)
+                                                {
+                                                    <span>کیلوگرم</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>تن</span>
+                                                }
+                                            </td>
+                                            
+                                            <td>@Model[i].registerDate.ToShamsi()</td>
+                                            <td>
+                                                <div class="btn-group mb-1">
+                                                    <button type="button"
+                                                        class="btn btn-outline-success">
+                                                        <a asp-controller="AddProduct" asp-action="ShowProduct" asp-route-productId="@Model[i].id">جزییات</a>
+                                                    </button> <button type="button"
+                                                                  class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                                                  data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                  aria-expanded="false" data-display="static">
+                                                        <span class="sr-only">اطلاعات</span>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a asp-controller="Admin" asp-action="acceptProduct" asp-route-productId="@Model[i].id" asp-route-Accept="@true" class="dropdown-item">تایید</a>
+                                                        <a asp-controller="Admin" asp-action="acceptProduct" asp-route-productId="@Model[i].id" asp-route-Accept="@false" class="dropdown-item">رد</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ *@

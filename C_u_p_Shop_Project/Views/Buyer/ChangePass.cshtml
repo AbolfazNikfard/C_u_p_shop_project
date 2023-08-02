@@ -1,0 +1,56 @@
+﻿@model ChangePasswordViewModel
+@{
+    ViewData["Title"] = "ChangePass";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="ec-page-content ec-vendor-uploads ec-user-account section-space-p shop_page">
+    <div class="container">
+        <div class="row">
+            <partial name="_buyerSidbarPanel"></partial>
+            <div class="ec-shop-rightside col-lg-9 col-md-12">
+                <div class="ec-vendor-dashboard-card ec-vendor-setting-card">
+                    <div class="ec-vendor-card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="ec-vendor-block-profile">
+                                    <div class="ec-vendor-block-img space-bottom-30">
+                                        <div class="ec-vendor-block-bg">
+                                        </div>
+                                        <div class="ec-vendor-block-detail">
+                                            <img class="v-img" src="~/assets/images/user/user-image.jpg" alt="vendor image">
+                                            <h5 class="name">@User.Identity.Name</h5>
+                                        </div>
+                                    </div>
+                                    <h5>اطلاعات کاربری</h5>
+                                    <form asp-controller="User" asp-action="ChangePassword" method="post">
+                                        <div class="row">
+                                            <div class="col-md-12>
+                                                <label class="form-label"> رمز عبور قدیمی </label>
+                                                <input asp-for="@Model.oldPassword" type="password" />
+                                                <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer;"></i>
+                                                <span asp-validation-for="oldPassword" style="color:red"></span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label">رمز عبور جدید</label>
+                                                <input asp-for="@Model.newPassword" type="password" />
+                                                <span asp-validation-for="newPassword" style="color:red"></span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label">تکرار رمز عبور جدید</label>
+                                                <input asp-for="@Model.confirmNewPassword" type="password" />
+                                                <span asp-validation-for="confirmNewPassword" style="color:red"></span>
+                                            </div>
+
+                                            <div class="text-danger" style="color:red" asp-validation-summary="ModelOnly"></div>
+                                        </div><br />
+                                        <button type="submit" class="btn btn-primary">به روز رسانی</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

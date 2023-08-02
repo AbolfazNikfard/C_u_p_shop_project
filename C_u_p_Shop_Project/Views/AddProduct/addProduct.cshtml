@@ -1,0 +1,163 @@
+﻿@model AddProductViewModel
+@{
+    ViewData["Title"] = "addProduct";
+    Layout = "~/Views/Shared/AdminPanel.cshtml";
+}
+<form class="row g-3" asp-controller="AddProduct" asp-action="addProduct" asp-route-message="@ViewData["Message"]" enctype="multipart/form-data" method="post">
+    <div class="ec-content-wrapper">
+        <div class="content">
+            <div class="breadcrumb-wrapper d-flex align-items-center justify-content-between">
+                <div>
+                    <h1>افزودن محصول</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-default">
+                        <div class="card-header card-header-border-bottom">
+                            <h2>افزودن محصول</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row ec-vendor-uploads">
+
+                                <div class="col-lg-4">
+                                    <div class="ec-vendor-img-upload">
+                                        <div class="ec-vendor-main-img">
+                                            <div class="avatar-upload">
+                                                @* @if (ViewData["Message"].Equals("Add"))
+                                                { *@
+                                                    <div class="avatar-edit">
+
+                                                        <input asp-for="@Model.productImage" type="file" id="imageUpload"
+                                                           class="ec-image-upload"
+                                                           accept=".jpg , .jpeg , .png"><label for="imageUpload">
+                                                            <img src="~/AdminPanel/assets/img/icons/edit.svg"
+                                                             class="svg_img header_svg" alt="edit">
+                                                        </label>
+                                                    </div>
+                                                @* } *@
+                                                <div class="avatar-preview ec-preview">
+                                                    <div class="imagePreview ec-div-preview">
+                                                        @if (Model.product.productImage != null)
+                                                        {
+                                                            <img class="ec-image-preview" src="~/assets/images/product-image/@(Model.product.productImage)" alt="edit">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img class="ec-image-preview"
+                                                             src="~/AdminPanel/assets/img/vender-upload-thumb-preview.jpg"
+                                                             alt="edit">
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-8">
+                                    <div class="ec-vendor-upload-detail">
+
+                                        <div class="col-md-6" style="margin-bottom:10px">
+                                            <label for="inputEmail4" class="form-label">نام محصول </label>
+                                            @if (ViewData["Message"].Equals("Edit"))
+                                            {
+                                                <input asp-for="@Model.product.Name" class="form-control slug-title" readonly>
+                                            }
+                                            else
+                                            {
+                                                <input asp-for="@Model.product.Name" class="form-control slug-title" maxlength="30" id="inputEmail4">
+                                            }
+                                        </div>
+                                        <div class="col-md-6" style="margin-bottom:10px">
+                                            <label class="form-label">گروه را انتخاب کنید (در صورت نبودن گروه موردنظر در زیر گروه ها)</label>
+                                            <select asp-for="@Model.product.groupId" class="form-select">
+                                                <option selected>-</option>
+
+                                                @foreach (var group in Model.groupAndSubGroups)
+                                                {
+                                                    <option value="@group.groupId">@group.groupName</option>
+                                                }
+
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6" style="margin-bottom:10px">
+                                            <label class="form-label">زیر گروه را انتخاب کنید</label>
+                                            <select asp-for="@Model.product.subGroupId" class="form-select">
+                                                <option selected>-</option>
+                                                @foreach (var group in Model.groupAndSubGroups)
+                                                {
+                                                    if (group.subGroops.Count != 0)
+                                                    {
+                                                        <optgroup label="@group.groupName">
+                                                            @foreach (var subgroup in group.subGroops)
+                                                            {
+                                                                <option value="@subgroup.id">@subgroup.Name</option>
+                                                            }
+
+                                                        </optgroup>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                        @* <div class="col-md-6" style="margin-bottom:10px">
+                                            <label class="form-label">واحد وزن را انتخاب کنید</label>
+                                            <select asp-for="@Model.product.WeightMassUnit" class="form-select">
+                                                <option value="@UnitOFMassMeasurement.Gram">گرم</option>
+                                                <option value="@UnitOFMassMeasurement.Kg">کیلوگرم</option>
+                                                <option value="@UnitOFMassMeasurement.Tonne">تن</option>
+                                                }
+                                            </select>
+                                        </div> *@
+                                        @* <div class="col-md-6" style="margin-bottom:10px">
+                                            <label class="form-label">
+                                                <span>تعداد</span>
+                                            </label>
+                                            <input asp-for="@Model.product.Weight" class="form-control" id="weight" type="number" min="1" max="999" value="@Model.product.Weight" />
+                                        </div> *@
+                                        <div class="col-md-6" style="margin-bottom:10px">
+                                            <label class="form-label">
+                                                قیمت <span> (تومان)</span>
+                                            </label>
+                                            <input asp-for="@Model.product.Price" class="form-control" id="price" type="number" max="1000000000" value="@(Model.product.Price)" />
+                                        </div>
+                                        @* <div class="col-md-6" style="margin-bottom:10px">
+                                            <label class="form-label">واحد موجودی را انتخاب کنید</label>
+                                            <select asp-for="@Model.product.StockMassUnit" class="form-select">
+                                                <option value="@UnitOFMassMeasurement.Gram">گرم</option>
+                                                <option value="@UnitOFMassMeasurement.Kg">کیلوگرم</option>
+                                                <option value="@UnitOFMassMeasurement.Tonne">تن</option>
+                                                }
+                                            </select>
+                                        </div> *@
+                                        <div class="col-md-6" style="margin-bottom:10px">
+                                            <label class="form-label">موجودی</label>
+                                            <input asp-for="@Model.product.Stock" class="form-control" id="stock" type="number" min="0" max="2000000000" value="@Model.product.Stock" />
+
+                                        </div>
+                                        @* <input asp-for="@Model.product.sellerId" type="hidden" /> *@
+                                        <input asp-for="@Model.product.registerDate" type="hidden" />
+                                        <input asp-for="@Model.product.id" type="hidden" />
+                                        <input asp-for="@Model.product.productImage" type="hidden" />
+                                        @* <input asp-for="@Model.product.confirmation" type="hidden" /> *@
+                                        <div class="col-md-12">
+                                            <label class="form-label">جزییات</label><textarea asp-for="@Model.product.Description" class="form-control" maxlength="1200" rows="4"></textarea>
+                                        </div>
+                                        <div style="color:red" asp-validation-summary="ModelOnly"></div><br />
+                                        <div class="col-md-12">
+                                            <button type="submit"
+                                                    class="btn btn-primary">
+                                                ثبت
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

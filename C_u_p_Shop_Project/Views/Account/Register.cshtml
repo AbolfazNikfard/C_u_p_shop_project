@@ -1,0 +1,57 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<section class="ec-page-content section-space-p">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="section-title">
+                    <h2 class="ec-title">ثبت نام</h2>
+                </div>
+            </div>
+            <div class="ec-register-wrapper">
+                <div class="ec-register-container">
+                    <div class="ec-register-form">
+                        <form asp-controller="Account" asp-action="Register" method="post">                                       
+                            <span class="ec-register-wrap ">
+                                <label asp-for="Email">ایمیل <span style="color:red">*</span></label>
+                                <input asp-for="Email" placeholder="وارد کردن ایمیل ">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </span>                           
+                            <span class="ec-register-wrap ">
+                                <label asp-for="Password">کلمه عبور <span style="color:red">*</span></label>
+                                <input asp-for="Password" placeholder="کلمه عبور را وارد کنید">
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </span>
+                            <span class="ec-register-wrap ">
+                                <label asp-for="ConfirmPassword">تکرار کلمه عبور <span style="color:red">*</span></label>
+                                <input asp-for="ConfirmPassword" placeholder="تکرار کلمه عبور را وارد کنید ">
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </span>
+                            
+                            @* <span class="ec-register">
+                                <input asp-for="role" style="display:inline;width:15px;margin-top:10px" height="15px" ; type="checkbox" /><span>ثبت نام به عنوان فروشنده </span>
+                                <label style="padding-bottom:15px" for="role">ثبت نام به عنوان فروشنده</label>
+                            </span> *@
+                           
+                            <span class="ec-register-wrap ec-register-half"><div class="text-danger" asp-validation-summary="ModelOnly"></div></span>
+                                <span class="ec-register-btn">
+                                    <button class="btn btn-primary" style="display:inline;margin-left:10px;margin-right:60px" type="submit">ثبت نام</button>
+                                </span>
+                                @*<span class="ec-register-btn">
+                                <button class="btn btn-primary" style="display:inline;margin-left:10px;margin-right:10px" type="submit">فروشنده</button>
+                                </span>          *@               
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,44 @@
+﻿@model Group
+@{
+    ViewData["Title"] = "EditGroup";
+    Layout = "~/Views/Shared/AdminPanel.cshtml";
+}
+<div class="ec-content-wrapper">
+    <div class="content">
+        <div class="breadcrumb-wrapper breadcrumb-wrapper-2 breadcrumb-contacts">
+            <h1>ویرایش دسته بندی اصلی</h1>
+            <p class="breadcrumbs">
+                <span><a>پنل</a></span> <span>
+                    <i class="mdi mdi-chevron-left"></i>
+                </span>ویرایش دسته بندی اصلی
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 col-lg-12">
+                <div class="ec-cat-list card card-default mb-24px">
+                    <div class="card-body">
+                        <div class="ec-cat-form">
+                            <h4>ویرایش </h4>
+                            <form asp-controller="Admin" asp-action="EditGroup" method="post">
+                                <div class="form-group row">
+                                    <label for="text" class="col-12 col-form-label">نام گروه</label>
+                                    <div class="col-12">
+                                        <input asp-for="@Model.id" type="hidden"/>
+                                        <input asp-for="@Model.Name" class="form-control here slug-title" maxlength="30">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button name="submit" type="submit" class="btn btn-primary">ویرایش</button>
+                                    </div>
+                                </div>
+                                <div class="text-danger" style="color:red" asp-validation-summary="ModelOnly"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

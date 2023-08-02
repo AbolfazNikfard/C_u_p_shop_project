@@ -1,0 +1,33 @@
+﻿@model List<GroupAndSubGroupViewModel>
+<ul class="sub-menu">
+    <li>
+        <a>همه</a>
+        @foreach (var allgroups in Model)
+        {
+            <ul class="sub-menu">
+                <li>
+                    <a asp-controller="Product" asp-action="ShowProductByGroupId" asp-route-id="@allgroups.groupId">@allgroups.groupName</a>
+                </li>
+            </ul>
+        }
+    </li>
+    @foreach (var groups in Model)
+    {
+        @if (groups.subGroops.Count != 0)
+        {
+            <li>
+                <a asp-controller="Product" asp-action="ShowProductByGroupId" asp-route-id="@groups.groupId">@groups.groupName</a>
+
+                @foreach (var subgroups in groups.subGroops)
+                {
+                    <ul class="sub-menu">
+                        <li>
+                            <a asp-controller="Product" asp-action="ShowProductBySubGroupId" asp-route-id="@subgroups.id">@subgroups.Name</a>
+                        </li>
+                    </ul>
+                }
+
+            </li>
+        }
+    }
+</ul>

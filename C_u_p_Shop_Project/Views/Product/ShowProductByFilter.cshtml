@@ -1,0 +1,7 @@
+﻿@model ShowProductByGroupComponentViewModel
+@{
+    //ViewData["Title"] = "ShowProductByFilter";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@await Component.InvokeAsync("ShowProductByGroupComponent",Model);
+

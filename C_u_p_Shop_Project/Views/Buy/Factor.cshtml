@@ -1,0 +1,151 @@
+﻿@using Crops_Shop_Project.Convertor;
+@model FactorViewModel
+@{
+    ViewData["Title"] = "فاکتور خرید کاربر";
+}
+@{
+    ulong TotalPrice = 0,ShowReadablePrice,TotalEachProduct;
+    //var Tax = 0;
+}
+<!-- Ec breadcrumb start -->
+<div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row ec_breadcrumb_inner">
+                    <div class="col-md-6 col-sm-12">
+                        <h2 class="ec-breadcrumb-title">فاکتور خرید</h2>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <!-- ec-breadcrumb-list start -->
+                        <ul class="ec-breadcrumb-list">
+                            @* <li class="ec-breadcrumb-item"><a href="index.html">خانه</a></li>
+                            <li class="ec-breadcrumb-item active">فاکتور</li>*@
+                        </ul>
+                        <!-- ec-breadcrumb-list end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Ec breadcrumb end -->
+<!-- User invoice section -->
+<section class="ec-page-content ec-vendor-uploads ec-user-account ec-invoice-2 section-space-p">
+    <div class="container">
+        <div class="row">
+            <partial name="~/Views/Shared/_buyerSidbarPanel.cshtml"></partial>
+            <div class="ec-shop-rightside col-lg-9 col-md-12">
+                <div class="ec-vendor-dashboard-card">
+                    <div class="ec-vendor-card-header">
+                        <h5>فاکتور</h5>
+                        <div class="ec-header-btn">                            
+                        </div>
+                    </div>
+                    <div class="ec-vendor-card-body padding-b-0">
+                        <div class="page-content">                            
+                            @if (Model.cartItems.Count == 0)
+                            {
+                                <h5>شما خریدی نداشته اید</h5>
+                            }
+                            else
+                            {
+                                <div class="container px-0">
+                                    <div class="row mt-4">
+                                        <div class="col-lg-12">
+                                            <hr class="row brc-default-l1 mx-n1 mb-4" />
+
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="my-2">
+                                                        <span class="text-sm text-grey-m2 align-middle">به آدرس : @Model.Address</span>                                                        
+                                                    </div>
+                                                    <div class="text-grey-m2">                                                   
+                                                        <div class="my-2">
+                                                            <b class="text-600">تلفن : </b>@Model.Telphone
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-4">
+
+                                                <div class="text-95 text-secondary-d3">
+                                                    <div class="ec-vendor-card-table">
+                                                        <table class="table ec-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col" style="color:white">شناسه</th>
+                                                                    <th scope="col" style="color:white">نام</th>
+                                                                    <th scope="col" style="color:white">تعداد</th>
+                                                                    <th scope="col" style="color:white">قیمت(تومان)</th>
+                                                                    <th scope="col" style="color:white">کل</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var Item in Model.cartItems)
+                                                                {
+                                                                    <tr>
+                                                                        <th><span>@Item.productId</span></th>
+                                                                        <td><span>@Item.productName </span></td>
+                                                                        <td><span>@Item.selectedNumberOfProducts</span></td>
+                                                                        @{
+                                                                            ShowReadablePrice = (ulong)Item.productPrice;
+                                                                            TotalEachProduct = (ulong)Item.productPrice * (ulong)(int.Parse(Item.selectedNumberOfProducts));
+                                                                            TotalPrice += TotalEachProduct;
+                                                                        }
+                                                                        <td><span>@(ShowReadablePrice.ToMoreReadable()) تومان</span></td>
+                                                                        <td><span>@(TotalEachProduct.ToMoreReadable()) تومان</span></td>                                                                    
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td class="border-none" colspan="3">
+                                                                        <span></span>
+                                                                    </td>
+                                                                    <td class="border-color" colspan="1">
+                                                                        <span><strong>ریزهزینه</strong></span>
+                                                                    </td>
+                                                                    <td class="border-color">
+                                                                        <span>@TotalPrice.ToMoreReadable() تومان</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="border-none" colspan="3">
+                                                                        <span></span>
+                                                                    </td>
+                                                                    <td class="border-color" colspan="1">
+                                                                        <span><strong>مالیات (10%)</strong></span>
+                                                                    </td>
+                                                                    <td class="border-color">
+                                                                        <span>@((0.1 * TotalPrice)) تومان</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="border-none m-m15" colspan="3">                                                                     
+                                                                    </td>
+                                                                    <td class="border-color m-m15" colspan="1">
+                                                                        <span><strong>کل</strong></span>
+                                                                    </td>
+                                                                    <td class="border-color m-m15">
+                                                                        <span>@(TotalPrice + (0.1 * TotalPrice)) تومان</span>
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End User invoice section -->

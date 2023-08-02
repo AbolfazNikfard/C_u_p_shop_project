@@ -1,0 +1,106 @@
+﻿@model addSubgroupViewModel
+@{
+    ViewData["Title"] = "addSubGroup";
+    Layout = "~/Views/Shared/AdminPanel.cshtml";
+}
+<div class="ec-content-wrapper">
+    <div class="content">
+        <div class="breadcrumb-wrapper breadcrumb-wrapper-2 breadcrumb-contacts">
+            <h1>دسته‌بندی‌ فرعی</h1>
+            <p class="breadcrumbs">
+                <span><a asp-controller="Admin" asp-action="Index">پنل</a></span> <span>
+                    <i class="mdi mdi-chevron-left"></i>
+                </span>دسته‌بندی‌ فرعی
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 col-lg-12">
+                <div class="ec-cat-list card card-default mb-24px">
+                    <div class="card-body">
+                        <div class="ec-cat-form">
+                            <h4> اضافه کردن زیر رده </h4>
+                            <form asp-controller="Admin" asp-action="addsubGroup" method="post">
+                                <div class="form-group row">
+                                    <label for="text"
+                                           class="col-12 col-form-label">نام زیرگروه</label>
+                                    <div class="col-12">
+                                        <input id="Name" name="Name" class="form-control here slug-title">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="parent-category"
+                                           class="col-12 col-form-label">دسته بندی والد</label>
+                                    <div class="col-12">
+
+                                        <select id="ParentId" name="ParentId" class="custom-select">                                            
+                                            @foreach (var group in Model.groups)
+                                            {
+                                                <option value="@group.id">@group.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button name="submit" type="submit"
+                                                class="btn btn-primary">
+                                            ارسال
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8 col-lg-12">
+                <div class="ec-cat-list card card-default">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="responsive-data-table" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>شناسه</th>
+                                        <th>نام</th>
+                                        <th>دسته بندی اصلی</th>
+                                        <th>محصولات</th>
+                                        <th>فعالیت</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var subgroup in Model.subgroups)
+                                    {
+                                        <tr>
+                                            <td>@subgroup.subgroupId</td>
+                                            <td>@subgroup.subgroupName</td>
+                                            <td>
+                                                <span class="ec-sub-cat-list">
+                                                    <span class="ec-sub-cat-tag">@subgroup.parentGroupName</span>
+                                                </span>
+                                            </td>
+                                            <td>@subgroup.productNumber</td>
+
+                                            <td>
+                                                <div>
+                                                    <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false" data-display="static">
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a asp-controller="Admin" asp-action="EditSubGroup" asp-route-subGroupId="@subgroup.subgroupId" class="dropdown-item">ویرایش</a>
+                                                        <a asp-controller="Admin" asp-action="DeleteSubGroup" asp-route-subGroupId="@subgroup.subgroupId" class="dropdown-item">حذف</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

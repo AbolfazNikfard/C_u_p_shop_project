@@ -1,0 +1,71 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .message-box {
+    display: inline-block;
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    top: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ef2f2f;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border: 2px solid #ef2f2f;
+    border-radius: 15px;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+  }
+  
+  .message-box.show {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+  }
+  
+  .close-button {
+    background-color: #fff; /* Set the background color for the close button */
+    color: #ef2f2f; /* Set the text color for the close button */
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 16px;
+    outline: none;
+    position: absolute;
+    top: 2px; /* Adjust the top value as needed to control the distance from the top edge */
+    right: 2px; /* Adjust the right value as needed to control the distance from the right edge */
+    width: 22px; /* Set the width of the close button */
+    height: 22px; /* Set the height of the close button */
+    border-radius: 50%; /* Make the close button circular */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .close-button:before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 2px;
+    background-color: #ef2f2f; /* Set the color for the "X" shape */
+    transform: rotate(45deg);
+  }
+  
+  .close-button:after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 2px;
+    background-color: #ef2f2f; /* Set the color for the "X" shape */
+    transform: rotate(-45deg);
+  }
+  
+  .close-button:hover:before, .close-button:hover:after {
+    background-color: rgba(239, 47, 47, 0.8); /* Set the hover color for the "X" shape */
+  }
+  

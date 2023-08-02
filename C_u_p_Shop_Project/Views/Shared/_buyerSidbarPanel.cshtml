@@ -1,0 +1,28 @@
+﻿@*@inject SignInManager<IdentityBuilder> Usermanager*@
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<!-- Sidebar Area Start -->
+<div class="ec-shop-leftside ec-vendor-sidebar col-lg-3 col-md-12">
+    <div class="ec-sidebar-wrap">
+        <!-- Sidebar Category Block -->
+        <div class="ec-sidebar-block">
+            <div class="ec-vendor-block">
+                 <div class="ec-vendor-block-bg"></div>
+                <div class="ec-vendor-block-detail">
+                    <img class="v-img" src="~/assets/images/user/user-image.jpg" alt="vendor image">
+                    <h5>@User.Identity.Name</h5>
+                </div> 
+                
+                <div class="ec-vendor-block-items">
+                    <ul>
+                        <li><a asp-controller="User" asp-action="Profile">اطلاعات کاربری</a></li>
+                        <li><a asp-controller="User" asp-action="ChangePassword">تغییر رمز عبور</a></li>
+                        <li><a asp-controller="Buyer" asp-action="Order">تاریخچه خرید ها</a></li>
+                        <li><a asp-controller="Buy" asp-action="userCart">سبد خرید</a></li>                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

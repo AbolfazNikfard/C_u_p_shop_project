@@ -1,0 +1,77 @@
+﻿@model List<SoldProductViewModel>
+@{
+    ViewData["Title"] = "SoldProducts";
+    Layout = "~/Views/Shared/AdminPanel.cshtml";
+    ulong ShowReadablePrice;
+}
+<div class="ec-content-wrapper">
+    <div class="content">
+        <div class="breadcrumb-wrapper breadcrumb-wrapper-2">
+            <h1> تاریخچه فروش محصولات</h1>
+            <p class="breadcrumbs">
+                <span><a href="index.html">پنل</a></span> <span>
+                    <i class="mdi mdi-chevron-left"></i>
+                </span>تاریخچه
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-default">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="responsive-data-table" class="table" style="width:100%">
+                                <thead>
+
+                                    <tr>
+                                        <th>شناسه محصول</th>
+                                        <th>عکس محصول</th>
+                                        <th>نام محصول</th>
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <th>فروشنده</th>
+                                        }
+                                        <th>خریدار</th>
+                                        <th>تعداد</th>
+                                        <th>قیمت</th>
+                                        <th>تاریخ</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    @foreach (var row in Model)
+                                    {
+                                        <tr>
+                                            <td>@row.productId</td>
+                                            <td><img class="tbl-thumb" src="~/assets/images/product-image/@(row.productImg)" /></td>
+                                            <td>@row.productName</td>
+                                            @if (User.IsInRole("Admin"))
+                                            {
+                                                if (row.sellerEmail == null)
+                                                {
+                                                    <td>Admin</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@row.sellerEmail</td>
+                                                }
+                                            }
+                                            <td>
+                                                <span>@row.buyerEmail</span>
+                                            </td>
+                                            <td>@row.soldNumber</td>
+                                            @{
+                                                ShowReadablePrice = (ulong)row.price;
+                                            }
+                                            <td>@ShowReadablePrice.ToMoreReadable()</td>
+                                            <td>@row.SoldDate</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
