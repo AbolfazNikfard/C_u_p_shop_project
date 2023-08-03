@@ -17,7 +17,7 @@ body {
     padding: 10px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    border: 2px solid #ef2f2f;
+    border: 2px solid #ffffff;
     border-radius: 15px;
     transition: opacity 0.3s ease, visibility 0s linear 0.3s;
   }
@@ -27,10 +27,15 @@ body {
     visibility: visible;
     transition: opacity 0.3s ease;
   }
-  
+  .close-button.error{
+    --close-button-color: #ef2f2f;
+  }
+  .close-button.success{
+    --close-button-color: #079e1b;
+  }
   .close-button {
     background-color: #fff; /* Set the background color for the close button */
-    color: #ef2f2f; /* Set the text color for the close button */
+    color: var(--close-button-color); /* Set the text color for the close button */
     border: none;
     cursor: pointer;
     padding: 0;
@@ -52,7 +57,7 @@ body {
     position: absolute;
     width: 12px;
     height: 2px;
-    background-color: #ef2f2f; /* Set the color for the "X" shape */
+    background-color: var(--close-button-color); /* Set the color for the "X" shape */
     transform: rotate(45deg);
   }
   
@@ -61,7 +66,7 @@ body {
     position: absolute;
     width: 12px;
     height: 2px;
-    background-color: #ef2f2f; /* Set the color for the "X" shape */
+    background-color: var(--close-button-color); /* Set the color for the "X" shape */
     transform: rotate(-45deg);
   }
   

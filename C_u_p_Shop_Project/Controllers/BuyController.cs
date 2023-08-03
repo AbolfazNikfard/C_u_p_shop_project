@@ -32,7 +32,7 @@ namespace Crops_Shop_Project.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> addToCart([FromBody] addToCart model)
         {
-
+            try{
             #region Validation OF number
             bool isNumber;
             isNumber = int.TryParse(model.number, out int quntity);
@@ -85,6 +85,10 @@ namespace Crops_Shop_Project.Controllers
                 return Ok(new { message = "Stock not enough" });
 
             return Ok(new { message = "Success" });
+            }
+            catch(Exception e){
+                 return StatusCode(500);
+            }
         }
         public async Task<IActionResult> userCart()
         {
