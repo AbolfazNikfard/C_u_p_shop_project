@@ -29,7 +29,7 @@ namespace Crops_Shop_Project.Controllers
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> addToCart([FromBody] addToCart model)
         {
 
@@ -38,9 +38,12 @@ namespace Crops_Shop_Project.Controllers
             isNumber = int.TryParse(model.number, out int quntity);
             if (isNumber == false)
             {
-               
-                return Ok(new { StatusCode = 200 , message = "success"});
+                return this.BadRequest();
                 //return RedirectToAction("ProductDetails", "Product", new { productId = productID, addToCartMessage = "Quantity Invalid" });
+            }
+            if (quntity >= 100)
+            {
+                return Ok(new { message = "Too large" });
             }
             #endregion
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -57,8 +60,7 @@ namespace Crops_Shop_Project.Controllers
                 var cartItem = _context.carts.Where(r => r.productId == product.id && r.buyerId == buyer.id).SingleOrDefault();
                 #region Validation
                 if (quntity > product.Stock)
-                    return RedirectToAction("ProductDetails", "Product", new { productId = model.productId, addToCartMessage = "Not enough" });
-
+                    return Ok(new { message = "More than stock" });
                 #endregion
                 if (cartItem == null)
                 {
@@ -72,7 +74,7 @@ namespace Crops_Shop_Project.Controllers
                 else
                 {
                     if (cartItem.Number + quntity >= 1000)
-                        return RedirectToAction("ProductDetails", "Product", new { productId = model.productId, addToCartMessage = "Limit" });
+                        return Ok(new { message = "Too large" });
                     cartItem.Number += quntity;
                     _context.carts.Update(cartItem);
 
@@ -80,9 +82,9 @@ namespace Crops_Shop_Project.Controllers
                 _context.SaveChanges();
             }
             else
-                return RedirectToAction("ProductDetails", "Product", new { productId = model.productId, addToCartMessage = "Not enough" });
+                return Ok(new { message = "Stock not enough" });
 
-            return RedirectToAction("Index", "Home", new { addToCartMessage = "Success" });
+            return Ok(new { message = "Success" });
         }
         public async Task<IActionResult> userCart()
         {

@@ -22,6 +22,12 @@
     </div>
 </div>
 <!-- Ec breadcrumb end -->
+<!-- Start Message Box For Add To Cart Response-->
+<div class="message-box" id="messageBox">
+    <span style="margin:10px 10px;padding:10px;" id="message-box-text"></span>
+    <button type="submit" class="close-button" id="closeButton"></button>
+</div>
+<!-- End Message Box For Add To Cart Response-->
 <section class="ec-page-content section-space-p product_page">
     <div class="container">
         <div class="row">
@@ -54,28 +60,11 @@
                                         </div>
 
                                     </div>
-                                    @* <div class="ec-single-desc">
-                                    @Model.Description
-                                    </div>*@
-
 
                                     <div class="ec-single-price-stoke">
                                         <div class="ec-single-price">
                                             <span class="ec-single-ps-title">قیمت :</span>
                                             <span>
-                                                @* @Model.product.Weight
-                                                @if (Model.product.WeightMassUnit == UnitOFMassMeasurement.Gram)
-                                                {
-                                                <span>گرم</span>
-                                                }
-                                                else if (Model.product.WeightMassUnit == UnitOFMassMeasurement.Kg)
-                                                {
-                                                <span>کیلوگرم</span>
-                                                }
-                                                else
-                                                {
-                                                <span>تن</span>
-                                                } *@
                                                 @{
                                                     ShowReadablePrice = (ulong)Model.product.Price;
                                                 }
@@ -85,7 +74,7 @@
                                         <div class="ec-single-stoke">
                                             @*<span class="ec-single-ps-title">در انبار</span>*@
                                             <span class="ec-single-sku">شناسه محصول: @Model.product.id#</span>
-                                            <input id="productIdSection" type="hidden" value="@Model.product.id"/>
+                                            <input id="productIdSection" type="hidden" value="@Model.product.id" />
                                         </div>
                                     </div>
 
@@ -93,60 +82,43 @@
                                     {
                                         if (User.IsInRole("Buyer"))
                                         {
-
-
                                             @if (Model.product.Stock >= 10)
                                             {
                                                 <div class="ec-single-qty">
-                                                    @* <form asp-controller="Buy" asp-action="addToCart" asp-route-productID="@Model.product.id" method="post"> *@
 
                                                     <div class="qty-plus-minus">
                                                         <div class="dec ec_qtybtn">-</div>
                                                         <input id="input-quantity" class="qty-input" type="text" maxlength="2" value="1">
                                                         <div class="inc ec_qtybtn">+</div>
                                                     </div>
-                                                    @* <div class="ec-single-cart ">
-                                        <button type="submit" class="btn btn-primary">افزودن به سبد خرید</button>
-                                        </div> *@
-                                                    <button id="show-message-box" class="btn btn-primary">show</button>
-                                                    <div class="message-box" id="messageBox">
-                                                        <span>موجودی محصول کافی نیست</span>
-                                                        <button class="close-button" id="closeButton"></button>
-                                                    </div>
 
+                                                    <div class="ec-single-cart ">
+                                                        <button id="addToCart-submit-btn" class="btn btn-primary">افزودن به سبد خرید</button>
+                                                    </div>
 
                                                     <div class="ec-single-wishlist">
                                                         <a class="ec-btn-group wishlist" title="علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
                                                     </div>
-                                                    @* <div class="ec-single-quickview">
-                                        <a href="#" class="ec-btn-group quickview" data-link-action="quickview" title="مشاهده" data-bs-toggle="modal" data-bs-target="#ec_quickview_modal"><img src="assets/images/icons/quickview.svg" class="svg_img pro_svg" alt=""></a>
-                                        </div> *@
-                                                    @* </form> *@
+
                                                 </div>
                                             }
                                             else if (0 < Model.product.Stock && Model.product.Stock < 10)
                                             {
                                                 <div class="ec-single-qty">
-                                                    @* <form asp-controller="Buy" asp-action="addToCart" asp-route-productID="@Model.product.id" method="post"> *@
 
                                                     <div class="qty-plus-minus">
                                                         <div class="dec ec_qtybtn">-</div>
                                                         <input class="qty-input" type="text" maxlength="2" value="1" readonly>
                                                         <div class="inc ec_qtybtn">+</div>
                                                     </div>
-                                                    @* <div class="ec-single-cart ">
-                                        <button type="submit" class="btn btn-primary">افزودن به سبد خرید</button>
-                                        </div> *@
-                                                    <button id="show-message-box" class="btn btn-primary">show</button>
-                                                    <div class="message-box" id="messageBox">
-                                                        <span style="margin:20px;">کالا با موفقیت به سبد خرید شما افزوده شد</span>
-                                                        <button class="close-button" id="closeButton"></button>
+                                                    <div class="ec-single-cart ">
+                                                        <button id="addToCart-submit-btn" class="btn btn-primary">افزودن به سبد خرید</button>
                                                     </div>
+
                                                     <div class="ec-single-wishlist">
                                                         <a class="ec-btn-group wishlist" title="علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
                                                     </div>
                                                 </div>
-
                                                 <b><span style="color: red;">تنها @Model.product.Stock عدد در انبار باقیمانده است</span></b>
 
                                                 <br>
@@ -160,25 +132,6 @@
                                                 <br>
 
                                                 <br>
-                                            }
-
-                                            @if (ViewData["Message"].Equals("Quantity Invalid"))
-                                            {
-                                                <span style="color:red">تعداد محصول انتخاب شده معتبر نیست</span>
-
-                                                <br />
-                                            }
-                                            else if (ViewData["Message"].Equals("Not enough"))
-                                            {
-                                                <span style="color:red">موجودی محصول کافی نیست</span>
-
-                                                <br />
-                                            }
-                                            else if (ViewData["Message"].Equals("Not enough"))
-                                            {
-                                                <span style="color:red">تعداد محصول انتخاب شده محدود است</span>
-
-                                                <br />
                                             }
                                         }
                                     }
@@ -187,41 +140,34 @@
                                         <div class="ec-single-qty">
                                             @if (Model.product.Stock >= 10)
                                             {
-                                                @* <form asp-controller="Buy" asp-action="addToCart" asp-route-productID="@Model.product.id" method="post"> *@
                                                 <div class="qty-plus-minus">
                                                     <div class="dec ec_qtybtn">-</div>
-                                                    <input class="qty-input" type="text" maxlength="2" value="1" readonly>
+                                                    <input class="qty-input" type="text" maxlength="2" value="1">
                                                     <div class="inc ec_qtybtn">+</div>
                                                 </div>
                                                 <div class="ec-single-cart ">
-                                                    <button type="submit" class="btn btn-primary">افزودن به سبد خرید</button>
+                                                    <button id="addToCart-submit-btn" type="submit" class="btn btn-primary">افزودن به سبد خرید</button>
                                                 </div>
+
                                                 <div class="ec-single-wishlist">
                                                     <a class="ec-btn-group wishlist" title="علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
                                                 </div>
-                                                @* <div class="ec-single-quickview">
-                                        <a href="#" class="ec-btn-group quickview" data-link-action="quickview" title="مشاهده" data-bs-toggle="modal" data-bs-target="#ec_quickview_modal"><img src="~/assets/images/icons/quickview.svg" class="svg_img pro_svg" alt=""></a>
-                                        </div> *@
-                                                @* </form> *@
+
                                             }
                                             else if (0 < Model.product.Stock && Model.product.Stock < 10)
                                             {
                                                 <div class="ec-single-qty">
-                                                    @* <form asp-controller="Buy" asp-action="addToCart" asp-route-productID="@Model.product.id" method="post"> *@
 
                                                     <div class="qty-plus-minus">
                                                         <div class="dec ec_qtybtn">-</div>
                                                         <input class="qty-input" type="text" maxlength="2" value="1" readonly>
                                                         <div class="inc ec_qtybtn">+</div>
                                                     </div>
-                                                    @* <div class="ec-single-cart ">
-                                            <button type="submit" class="btn btn-primary">افزودن به سبد خرید</button>
-                                            </div> *@
-                                                    <button id="show-message-box" class="btn btn-primary">افزودن به سبد خرید</button>
-                                                    <div class="message-box" id="messageBox">
-                                                        <span style="margin:20px;">کالا با موفقیت به سبد خرید شما افزوده شد</span>
-                                                        <button class="close-button" id="closeButton"></button>
+
+                                                    <div class="ec-single-cart ">
+                                                        <button id="addToCart-submit-btn" class="btn btn-primary">افزودن به سبد خرید</button>
                                                     </div>
+
                                                     <div class="ec-single-wishlist">
                                                         <a class="ec-btn-group wishlist" title="علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
                                                     </div>
@@ -242,24 +188,7 @@
                                                 <br>
                                             }
                                         </div>
-                                        @if (ViewData["Message"].Equals("Quantity Invalid"))
-                                        {
-                                            <span style="color:red">تعداد محصول انتخاب شده معتبر نیست</span>
 
-                                            <br />
-                                        }
-                                        else if (ViewData["Message"].Equals("Not enough"))
-                                        {
-                                            <span style="color:red">موجودی محصول کافی نیست</span>
-
-                                            <br />
-                                        }
-                                        else if (ViewData["Message"].Equals("Not enough"))
-                                        {
-                                            <span style="color:red">تعداد محصول انتخاب شده محدود است</span>
-
-                                            <br />
-                                        }
                                     }
                                     <div class="ec-single-social">
                                         <ul class="mb-0">
@@ -303,39 +232,9 @@
                             <div id="ec-spt-nav-info" class="tab-pane fade">
                                 <div class="ec-single-pro-tab-moreinfo">
                                     <ul>
-                                        @* <li>
-                                        <span>وزن</span> @Model.product.Weight
-                                        @if (Model.product.WeightMassUnit == UnitOFMassMeasurement.Gram)
-                                        {
-                                        <span>گرم</span>
-                                        }
-                                        else if (Model.product.WeightMassUnit == UnitOFMassMeasurement.Kg)
-                                        {
-                                        <span>کیلوگرم</span>
-                                        }
-                                        else
-                                        {
-                                        <span>تن</span>
-                                        }
-                                        </li> *@
                                         <li>
                                             <span>موجودی</span> @Model.product.Stock
-                                            @* @if (Model.product.StockMassUnit == UnitOFMassMeasurement.Gram)
-                                            {
-                                            <span>گرم</span>
-                                            }
-                                            else if (Model.product.StockMassUnit == UnitOFMassMeasurement.Kg)
-                                            {
-                                            <span>کیلوگرم</span>
-                                            }
-                                            else
-                                            {
-                                            <span>تن</span>
-                                            } *@
                                         </li>
-                                        @* <li>
-                                        <span>فروشنده</span> @Model.seller
-                                        </li> *@
                                     </ul>
                                 </div>
                             </div>
@@ -389,5 +288,5 @@
         </div>
     </div>
 </section>
-<script src="~/assets/js/plugins/addToCart.js"></script>
+<script src="~/assets/js/plugins/addToCart.js?version=2"></script>
 
