@@ -39,7 +39,6 @@ namespace Crops_Shop_Project.Controllers
             if (isNumber == false)
             {
                 return this.BadRequest();
-                //return RedirectToAction("ProductDetails", "Product", new { productId = productID, addToCartMessage = "Quantity Invalid" });
             }
             if (quntity >= 100)
             {

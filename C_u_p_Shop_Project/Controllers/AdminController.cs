@@ -1,5 +1,4 @@
 ﻿using Crops_Shop_Project.Data;
-using Crops_Shop_Project.Enum;
 using Crops_Shop_Project.Models;
 using Crops_Shop_Project.Models.View_Models;
 using Microsoft.AspNetCore.Authorization;
@@ -23,45 +22,6 @@ namespace Crops_Shop_Project.Controllers
         {
             return View();
         }
-        // public IActionResult PendingProducts()
-        // {
-        //     var products = _context.products.IgnoreQueryFilters().Where(p => p.IsDelete == false).ToList(); //&& p.confirmation == AcceptProduct.Pending).ToList();
-        //     return View(products);
-        // }
-        // public IActionResult acceptProduct(int productId, bool Accept)
-        // {
-        //     try
-        //     {
-        //         var product = _context.products.IgnoreQueryFilters().SingleOrDefault(p => p.id == productId);
-        //         if (product == null) { return NotFound(); }
-        //         if (Accept == true)
-        //             product.confirmation = AcceptProduct.Accept;
-        //         else
-        //             product.confirmation = AcceptProduct.Reject;
-        //         _context.products.Update(product);
-        //         _context.SaveChanges();
-        //         return RedirectToAction("PendingProducts", "Admin");
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         return NotFound();
-        //     }
-        // }
-        // public IActionResult SellerList()
-        // {
-        //     var sellers = _context.sellers
-        //         .Include(p => p.products).Include(s => s.orders).Include(u => u.user)
-        //         .Select(s => new SellerListViewModel
-        //         {
-        //             Id = s.id,
-        //             Name = s.user.Name,
-        //             Family = s.user.Family,
-        //             Email = s.user.Email,
-        //             productsNumber = s.products.Count(),
-        //             soldNumber = s.orders.Sum(o => o.Number)
-        //         }).ToList();
-        //     return View(sellers);
-        // }
         public IActionResult BuyerList()
         {
             var buyers = _context.buyers
@@ -84,11 +44,7 @@ namespace Crops_Shop_Project.Controllers
             if (user == null) { return NotFound(); }
             UserViewModel userModel = new UserViewModel
             {
-                Name = user.Name,
-                Family = user.Family,
-                Email = user.Email,
-                Address = user.Address,
-                PhoneNumber = user.PhoneNumber
+                user = user
             };
             return View(userModel);
         }
@@ -99,7 +55,7 @@ namespace Crops_Shop_Project.Controllers
             {
                 #region Validation
                 bool isNumber;
-                isNumber = long.TryParse(updateUser.PhoneNumber, out long phone);
+                isNumber = long.TryParse(updateUser.user.PhoneNumber, out long phone);
                 long number = phone;
                 int count = 0;
                 while (number > 0)
@@ -107,22 +63,22 @@ namespace Crops_Shop_Project.Controllers
                     number = number / 10;
                     count++;
                 }
-                if (updateUser.Name == null)
+                if (updateUser.user.Name == null)
                 {
                     ModelState.AddModelError("", "لطفا نام را وارد کنید");
                     return View(updateUser);
                 }
-                if (updateUser.Family == null)
+                if (updateUser.user.Family == null)
                 {
                     ModelState.AddModelError("", "لطفا نام خانوادگی را وارد کنید");
                     return View(updateUser);
                 }
-                if (updateUser.Address == null)
+                if (updateUser.user.Address == null)
                 {
                     ModelState.AddModelError("", "لطفا آدرس را وارد کنید");
                     return View(updateUser);
                 }
-                if (updateUser.PhoneNumber == null)
+                if (updateUser.user.PhoneNumber == null)
                 {
                     ModelState.AddModelError("", "لطفا شماره تماس را وارد کنید");
                     return View(updateUser);
@@ -138,12 +94,12 @@ namespace Crops_Shop_Project.Controllers
                     return View(updateUser);
                 }
                 #endregion
-                var user = await _userManager.FindByEmailAsync(updateUser.Email);
+                var user = await _userManager.FindByEmailAsync(updateUser.user.Email);
                 if (user == null) { return NotFound(); }
-                user.Name = updateUser.Name;
-                user.Family = updateUser.Family;
-                user.Address = updateUser.Address;
-                user.PhoneNumber = updateUser.PhoneNumber;
+                user.Name = updateUser.user.Name;
+                user.Family = updateUser.user.Family;
+                user.Address = updateUser.user.Address;
+                user.PhoneNumber = updateUser.user.PhoneNumber;
                 var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                     return RedirectToAction("Index", "Admin");
@@ -169,19 +125,6 @@ namespace Crops_Shop_Project.Controllers
                 if (user == null) { return NotFound(); }
 
                 var roleName = await _userManager.GetRolesAsync(user);
-                // if (roleName[0] == "Seller")
-                // {
-                //     var seller = _context.sellers.SingleOrDefault(s => s.userId == user.Id);
-                //     if (seller == null) { return NotFound(); }
-                //     seller.IsDelete = true;
-                //     var products = _context.products.IgnoreQueryFilters().Where(p => p.IsDelete == false && p.sellerId == seller.id).ToList();
-                //     foreach (var product in products)
-                //     {
-                //         product.IsDelete = true;
-                //     }
-                //     _context.sellers.Update(seller);
-                //     _context.products.UpdateRange(products);
-                // }
                 if (roleName[0] == "Buyer")
                 {
                     var buyer = _context.buyers.SingleOrDefault(b => b.userId == user.Id);

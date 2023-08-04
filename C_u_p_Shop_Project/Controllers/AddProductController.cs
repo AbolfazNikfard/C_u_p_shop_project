@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Crops_Shop_Project.Data;
 using Microsoft.AspNetCore.Identity;
 using Crops_Shop_Project.Enum;
+using Crops_Shop_Project.Shared;
 
 namespace Crops_Shop_Project.Controllers
 {
@@ -24,14 +25,6 @@ namespace Crops_Shop_Project.Controllers
         [HttpGet]
         public async Task<IActionResult> addProduct(int? productId, string message)
         {
-            //var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            // if (User.IsInRole("Seller"))
-            // {
-            //     var seller = _context.sellers.SingleOrDefault(s => s.userId == user.Id);
-            //     if (seller == null) { return NotFound(); }
-            //     if (user.PhoneNumber == null)
-            //         return RedirectToAction("Profile", "User", new { message = "AddProduct" });
-            // }
             if (message == null) { return NotFound(); }
             ViewData["Message"] = message;
             Product product;
@@ -73,7 +66,6 @@ namespace Crops_Shop_Project.Controllers
                         }).ToList();
                 addProduct.groupAndSubGroups = groupsAndSubGroups;
 
-
                 var subGroup = _context.subGroups.Where(s => s.id == addProduct.product.subGroupId).SingleOrDefault();
                 int ParentGroupId = 0;
                 if (subGroup != null) { ParentGroupId = subGroup.parentGroupId; }
@@ -112,45 +104,24 @@ namespace Crops_Shop_Project.Controllers
                     }
                     addProduct.product.groupId = ParentGroupId;
                 }
-                // if (addProduct.product.WeightMassUnit > addProduct.product.StockMassUnit)
-                // {
-                //     ModelState.AddModelError("", "موجودی محصول از وزن آن کمتر میباشد");
-                //     return View(addProduct);
-                // }
-                // else
-                // {
-                //     if (addProduct.product.WeightMassUnit == addProduct.product.StockMassUnit)
-                //     {
-                //         if (addProduct.product.Weight > addProduct.product.Stock)
-                //         {
-                //             ModelState.AddModelError("", "موجودی محصول از وزن آن کمتر میباشد");
-                //             return View(addProduct);
-                //         }
-                //     }
-                // }
+                if (addProduct.product.Stock <= 0)
+                {
+                    ModelState.AddModelError("", "موجودی محصول باید بزرگ تر از 0 باشد");
+                    return View(addProduct);
+                }
                 #endregion
 
                 #region AddOrUpdateProduct                
                 string ImageUrl = "";
                 if ((ViewData["Message"].Equals("Edit") && addProduct.productImage != null) || addProduct.product.productImage == null)
                 {
-                    ImageUrl = CreateImage(addProduct.productImage.FileName.ToString(), addProduct.productImage);
+                    ImageUrl = saveImages.createImage(addProduct.productImage.FileName.ToString(), addProduct.productImage, BaseUrl);
                     addProduct.product.productImage = ImageUrl;
                 }
                 if (ViewData["Message"].Equals("Edit"))
                     _context.products.Update(addProduct.product);
                 else if (ViewData["Message"].Equals("Add"))
                 {
-                    // if (User.IsInRole("Seller"))
-                    // {
-                    //     var user = await _userManager.FindByNameAsync(User.Identity.Name);
-                    //     var seller = _context.sellers.SingleOrDefault(s => s.userId == user.Id);
-                    //     if (seller == null) { return NotFound(); }
-                    //     addProduct.product.sellerId = seller.id;
-                    // }
-                    // else
-                        //addProduct.product.confirmation = AcceptProduct.Accept;
-
                     addProduct.product.registerDate = DateTime.Now;
                     _context.products.Add(addProduct.product);
                 }
@@ -196,51 +167,8 @@ namespace Crops_Shop_Project.Controllers
         public async Task<IActionResult> ProductList()
         {
             List<Product> productList;
-            // if (User.IsInRole("Seller"))
-            // {
-            //     var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            //     var seller = _context.sellers.SingleOrDefault(s => s.userId == user.Id);
-            //     if (seller == null) { return NotFound(); }
-
-            //     productList = _context.products.Where(p => p.sellerId == seller.id)
-            //         .Include(s => s.seller).ThenInclude(u => u.user)
-            //         .Select(p => new ProductListViewModel
-            //         {
-            //             product = p,
-            //             seller = p.seller.user.UserName
-            //         }).ToList();
-            // }
-            // else
-                productList = _context.products.ToList();
-                    // .Include(s => s.seller).ThenInclude(u => u.user)
-                    //  .Select(p => new ProductListViewModel
-                    //  {
-                    //      product = p,
-                    //      seller = p.seller.user.UserName
-                    //  }).ToList();
+            productList = _context.products.ToList();
             return View(productList);
         }
-        #region ExtraMethod      
-        private string CreateImage(string ImageName, IFormFile Image)
-        {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/", BaseUrl);
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            var fileName = Guid.NewGuid() + Path.GetExtension(ImageName)?.ToLower();
-            var url = fileName;
-            SaveImage(Image, BaseUrl, fileName);
-            return url;
-        }
-        private void SaveImage(IFormFile upload, string url, string fileName)
-        {
-            if (upload.Length <= 0) return;
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", url, fileName);
-
-            using var stream = new FileStream(path, FileMode.Create);
-            upload.CopyTo(stream);
-        }
-        #endregion
     }
 }
