@@ -55,7 +55,6 @@
                                             <th scope="col">شناسه</th>
                                             <th scope="col">تصویر</th>
                                             <th scope="col">نام</th>
-                                            <th scope="col">وزن</th>
                                             <th scope="col">تعداد</th>
                                             <th scope="col">قیمت(تومان)</th>
                                             <th scope="col">تاریخ</th>
@@ -69,23 +68,6 @@
                                                 <th scope="row"><span>@order.productId</span></th>
                                                 <td><img class="prod-img" src="~/assets/images/product-image/@(order.productImage)" alt="عکس محصول"></td>
                                                 <td><span>@order.productName</span></td>
-                                                <td>
-                                                    <span>
-                                                        @order.Weight
-                                                        @if (order.WeightMassUnit == UnitOFMassMeasurement.Gram)
-                                                        {
-                                                            <span>گرم</span>
-                                                        }
-                                                        else if (order.WeightMassUnit == UnitOFMassMeasurement.Kg)
-                                                        {
-                                                            <span>کیلوگرم</span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>تن</span>
-                                                        }
-                                                    </span>
-                                                </td>
                                                 <td><span>@order.Number</span></td>
                                                 @{
                                                     ShowReadablePrice = (ulong)order.Price;

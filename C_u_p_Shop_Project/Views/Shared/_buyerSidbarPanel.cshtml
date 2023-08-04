@@ -1,4 +1,4 @@
-﻿@*@inject SignInManager<IdentityBuilder> Usermanager*@
+﻿@*@inject UserManager<User> Usermanager*@
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -10,7 +10,14 @@
             <div class="ec-vendor-block">
                  <div class="ec-vendor-block-bg"></div>
                 <div class="ec-vendor-block-detail">
-                    <img class="v-img" src="~/assets/images/user/user-image.jpg" alt="vendor image">
+                   @* @if (Model.userImage != null)
+                    {
+                        <img class="image-thumb-preview ec-image-preview v-img" src="~/assets/images/user-image/@(Model.user.userImage)" alt="edit">
+                    }
+                    else
+                    {*@
+                        <img class="image-thumb-preview ec-image-preview v-img" src="~/assets/images/user-image/default-image.jpg" alt="edit">
+                    @*}*@
                     <h5>@User.Identity.Name</h5>
                 </div> 
                 

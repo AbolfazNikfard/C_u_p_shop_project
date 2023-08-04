@@ -7,7 +7,7 @@
     <div class="content">
         <div class="breadcrumb-wrapper breadcrumb-contacts">
             <div>
-                <h1> نمایه </h1>
+                <h1>نمایه</h1>
                 <p class="breadcrumbs">
                     <span><a href="#">پنل</a></span> <span>
                         <i class="mdi mdi-chevron-left"></i>
@@ -22,16 +22,23 @@
                         <div class="ec-disp">
                             <div class="text-center widget-profile px-0 border-0">
                                 <div class="card-img mx-auto rounded-circle">
-                                    <img src="~/assets/images/user/user-image.jpg" alt="user image">
+                                    @if (Model.user.userImage != null)
+                                    {
+                                        <img class="image-thumb-preview ec-image-preview v-img" src="~/assets/images/user-image/@(Model.user.userImage)" alt="edit">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/assets/images/user/user-image.jpg" alt="user image">
+                                    }
                                 </div>
                                 <div class="card-body">
-                                    @if (Model.Name == null && Model.Family == null)
+                                    @if (Model.user.Name == null && Model.user.Family == null)
                                     {
                                         <h4 class="py-2 text-dark"></h4>
                                     }
                                     else
                                     {
-                                        <h4 class="py-2 text-dark">@Model.Name @Model.Family</h4>
+                                        <h4 class="py-2 text-dark">@Model.user.Name @Model.user.Family</h4>
                                     }
                                 </div>
                             </div>
@@ -41,10 +48,10 @@
                             <h5 class="text-dark">اطلاعات تماس</h5>
                             <p class="text-dark font-weight-medium pt-24px mb-2"> آدرس ایمیل </p>
                             <p>
-                                <span>@Model.Email</span>
+                                <span>@Model.user.Email</span>
                             </p>
                             <p class="text-dark font-weight-medium pt-24px mb-2"> شماره تلفن </p>
-                            <p>@Model.PhoneNumber</p>
+                            <p>@Model.user.PhoneNumber</p>
                         </div>
                     </div>
                 </div>
@@ -52,28 +59,28 @@
                     <div class="tab-pane">
                         <div class="tab-pane-content mt-5">
                             <form asp-controller="Admin" asp-action="EditUser" method="post">
-                                <input asp-for="@Model.Email" type="hidden" />
+                                <input asp-for="@Model.user.Email" type="hidden" />
                                 <div class="row mb-2">
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="firstName">نام</label>
-                                            <input asp-for="@Model.Name" type="text" class="form-control" id="firstName" placeholder="نام" value="@Model.Name">
+                                            <input asp-for="@Model.user.Name" type="text" class="form-control" id="firstName" placeholder="نام" value="@Model.user.Name">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="lastName">نام خانوادگی</label>
-                                            <input asp-for="@Model.Family" type="text" class="form-control" id="lastName" placeholder="نام خانوادگی" value="@Model.Family">
+                                            <input asp-for="@Model.user.Family" type="text" class="form-control" id="lastName" placeholder="نام خانوادگی" value="@Model.user.Family">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group mb-4">
                                     <label for="userName">آدرس</label>
-                                    <input asp-for="@Model.Address" type="text" class="form-control" id="userName" placeholder="آدرس" value="@Model.Address">
+                                    <input asp-for="@Model.user.Address" type="text" class="form-control" id="userName" placeholder="آدرس" value="@Model.user.Address">
                                 </div>
                                 <div class="form-group mb-4">
                                     <label for="tel">شماره تماس</label>
-                                    <input asp-for="@Model.PhoneNumber" type="text" class="form-control" id="tel" placeholder="شماره تماس" value="@Model.PhoneNumber">
+                                    <input asp-for="@Model.user.PhoneNumber" type="text" class="form-control" id="tel" placeholder="شماره تماس" value="@Model.user.PhoneNumber">
                                 </div>
                                 <div class="text-danger" style="color:red" asp-validation-summary="ModelOnly"></div>
                                 <div class="d-flex justify-content-end mt-5">

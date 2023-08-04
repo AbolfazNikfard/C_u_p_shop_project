@@ -52,8 +52,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>شناسه محصول</th>
-                                                    <th>نام محصول</th>
-                                                    @* <th style="text-align: center;">وزن</th> *@
+                                                    <th>نام محصول</th>                                                   
                                                     <th style="text-align: center;">تعداد</th>
                                                     <th>قیمت</th>
                                                     <th>کل</th>
@@ -71,23 +70,6 @@
                                                         <input asp-for="@(Model[i].productName)" type="hidden" />
                                                         <input asp-for="@(Model[i].productImage)" type="hidden" />
 
-                                                        @* <td class="ec-cart-pro-price" style="text-align: center;">
-                                                            <span>@Model[i].productWeight</span> 
-                                                            <input asp-for="@(Model[i].productWeight)" type="hidden" />
-                                                            <input asp-for="@(Model[i].productWeightUnit)" type="hidden" /> 
-                                                            @if (Model[i].productWeightUnit == UnitOFMassMeasurement.Gram)
-                                                            {
-                                                                <span>گرم</span>
-                                                            }
-                                                            else if (Model[i].productWeightUnit == UnitOFMassMeasurement.Kg)
-                                                            {
-                                                                <span>کیلوگرم</span>
-                                                            }
-                                                            else
-                                                            {
-                                                                <span>تن</span>
-                                                            }
-                                                        </td> *@
                                                         <td>
                                                             <div class="cart-qty-plus-minus">
                                                                 <input asp-for="@(Model[i].selectedNumberOfProducts)" type="text" maxlength="3" value="@Model[i].selectedNumberOfProducts">

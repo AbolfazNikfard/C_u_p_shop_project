@@ -87,7 +87,7 @@ document.getElementById("addToCart-submit-btn").addEventListener("click", async 
                 if (closeButton.classList.contains("error"))
                     closeButton.classList.remove("error");
                 closeButton.classList.add("success");
-                messageBoxText.innerText = "محصول با موفقیت به سبد شما افزوده شد";
+                messageBoxText.innerText = "محصول با موفقیت به سبد شما افزوده شد. در حال انتقال به صفحه سبد خرید ...";
                 showMessage();
                 setTimeout(() => {
                     window.location.replace("http://localhost:5048/Buy/userCart");

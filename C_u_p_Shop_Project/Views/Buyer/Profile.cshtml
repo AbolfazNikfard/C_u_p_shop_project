@@ -21,67 +21,75 @@
                                             <a href="#" class="btn btn-lg btn-primary" data-link-action="editmodal" title="ویرایش جزییات" data-bs-toggle="modal" data-bs-target="#edit_modal">ویرایش</a>
                                         </div>
                                         <div class="ec-vendor-block-detail">
-                                            <img class="v-img" src="~/assets/images/user/user-image.jpg" alt="vendor image">
+                                            @if (Model.user.userImage != null)
+                                            {
+                                                <img class="image-thumb-preview ec-image-preview v-img" src="~/assets/images/user-image/@(Model.user.userImage)" alt="edit">
+                                            }
+                                            else
+                                            {
+                                                <img class="image-thumb-preview ec-image-preview v-img" src="~/assets/images/user-image/default-image.jpg" alt="edit">
+                                            }
                                             <h5 class="name">@User.Identity.Name</h5>
                                         </div>
                                     </div>
-                                    
+
                                     <h5>اطلاعات کاربری</h5>
                                     @* <form asp-controller="User" asp-action="UpdateProfile" asp-route-message="@ViewData["BuyMessage"]" method="post"> *@
-                                        <div class="row">
-                                            @* <div class="col-md-6 col-sm-12">
-                                                <label class="form-label">نام </label>
-                                                <input asp-for="@Model.Name" class="form-control" type="text" value="@Model.Name" />
-                                            </div> *@
-                                             <div class="col-md-6 col-sm-12">
-                                                <div class="ec-vendor-detail-block ec-vendor-block-email space-bottom-30">
-                                                    <h6>نام<a href="javasript:void(0)" data-link-action="editmodal" title="ویرایش جزییات" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="~/assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit"></a></h6>
-                                                    <ul>
-                                                        <li><strong>نام: </strong>@Model.Name</li>
-                                                        
-                                                    </ul>
-                                                </div>
+                                    <div class="row">
+                                        @* <div class="col-md-6 col-sm-12">
+                                        <label class="form-label">نام </label>
+                                        <input asp-for="@Model.Name" class="form-control" type="text" value="@Model.Name" />
+                                        </div> *@
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="ec-vendor-detail-block ec-vendor-block-email space-bottom-30">
+                                                <h6>نام<a href="javasript:void(0)" data-link-action="editmodal" title="ویرایش جزییات" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="~/assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit"></a></h6>
+                                                <ul>
+                                                    <li><strong>نام: </strong>@Model.user.Name</li>
+
+                                                </ul>
                                             </div>
-                                            @* <div class="col-md-6 col-sm-12">
-                                                <label class="form-label">نام خانوادگی</label>
-                                                <input asp-for="@Model.Family" class="form-control" type="text" value="@Model.Family" />
-                                            </div> *@
-                                             <div class="col-md-6 col-sm-12">
-                                                <div class="ec-vendor-detail-block ec-vendor-block-email space-bottom-30">
-                                                    <h6>نام خانوادگی<a href="javasript:void(0)" data-link-action="editmodal" title="ویرایش جزییات" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="~/assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit"></a></h6>
-                                                    <ul>
-                                                        <li><strong>نام خانوادگی: </strong>@Model.Family</li>
-                                                        
-                                                    </ul>
-                                                </div>
+                                        </div>
+                                        @* <div class="col-md-6 col-sm-12">
+                                        <label class="form-label">نام خانوادگی</label>
+                                        <input asp-for="@Model.Family" class="form-control" type="text" value="@Model.Family" />
+                                        </div> *@
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="ec-vendor-detail-block ec-vendor-block-email space-bottom-30">
+                                                <h6>نام خانوادگی<a href="javasript:void(0)" data-link-action="editmodal" title="ویرایش جزییات" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="~/assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit"></a></h6>
+                                                <ul>
+                                                    <li><strong>نام خانوادگی: </strong>@Model.user.Family</li>
+
+                                                </ul>
                                             </div>
-                                            @* <div class="col-md-6">
-                                                <label class="form-label">تلفن</label>
-                                                <input asp-for="@Model.PhoneNumber" class="form-control" type="text" value="@Model.PhoneNumber" />
-                                            </div> *@
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="ec-vendor-detail-block ec-vendor-block-contact space-bottom-30">
-                                                    <h6>شماره تماس<a href="javasript:void(0)" data-link-action="editmodal" title="ویرایش جزییات" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="~/assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit"></a></h6>
-                                                    <ul>
-                                                        <li><strong>شماره تماس: </strong>@Model.PhoneNumber</li>
-                                                    </ul>
-                                                </div>
+                                        </div>
+                                        @* <div class="col-md-6">
+                                        <label class="form-label">تلفن</label>
+                                        <input asp-for="@Model.PhoneNumber" class="form-control" type="text" value="@Model.PhoneNumber" />
+                                        </div> *@
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="ec-vendor-detail-block ec-vendor-block-contact space-bottom-30">
+                                                <h6>شماره تماس<a href="javasript:void(0)" data-link-action="editmodal" title="ویرایش جزییات" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="~/assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit"></a></h6>
+                                                <ul>
+                                                    <li><strong>شماره تماس: </strong>@Model.user.PhoneNumber</li>
+                                                </ul>
                                             </div>
-                                            @* <div class="col-md-12">
-                                                <label class="form-label">آدرس</label>
-                                                <input asp-for="@Model.Address" class="form-control" type="text" value="@Model.Address" />
+                                        </div>
+                                        @* <div class="col-md-12">
+                                        <label class="form-label">آدرس</label>
+                                        <input asp-for="@Model.Address" class="form-control" type="text" value="@Model.Address" />
+                                        </div>*@
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="ec-vendor-detail-block ec-vendor-block-address mar-b-30">
+                                                <h6>آدرس<a href="javasript:void(0)" data-link-action="editmodal" title="ویرایش جزییات" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="~/assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit"></a></h6>
+                                                <ul>
+                                                    <li><strong>آدرس: </strong>@Model.user.Address</li>
+                                                </ul>
                                             </div>
-                                            <div class="text-danger" style="color:red" asp-validation-summary="ModelOnly"></div> *@
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="ec-vendor-detail-block ec-vendor-block-address mar-b-30">
-                                                    <h6>آدرس<a href="javasript:void(0)" data-link-action="editmodal" title="ویرایش جزییات" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="~/assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit"></a></h6>
-                                                    <ul>
-                                                        <li><strong>آدرس: </strong>@Model.Address</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div><br />
-                                        @* <button type="submit" class="btn btn-primary">به روز رسانی</button> *@
+                                        </div>
+                                    </div><br />
+                                    <div class="text-danger" style="color:red;text-align:center" asp-validation-summary="ModelOnly"></div>
+                                    @* <button type="submit" class="btn btn-primary">به روز رسانی</button> *@
                                     @* </form> *@
                                 </div>
                             </div>
@@ -93,87 +101,71 @@
     </div>
 </section>
 <!-- Modal -->
-    <div class="modal fade" id="edit_modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="ec-vendor-block-img space-bottom-30">
-                            <div class="ec-vendor-block-bg cover-upload">
-                                <div class="thumb-upload">
-                                    @* <div class="thumb-edit">
-                                        <input type='file' id="thumbUpload01" class="ec-image-upload" accept=".png, .jpg, .jpeg">
-                                        <label><img src="~/assets/images/icons/edit.svg" class="svg_img header_svg" alt="edit"></label>
-                                    </div> *@
-                                    <div class="thumb-preview ec-preview">
-                                        <div class="image-thumb-preview">
-                                            <img class="image-thumb-preview ec-image-preview v-img" src="~/assets/images/banner/8.jpg" alt="edit">
-                                        </div>
+<div class="modal fade" id="edit_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="ec-vendor-block-img space-bottom-30">
+                        <div class="ec-vendor-block-bg cover-upload">
+                            <div class="thumb-upload">
+                                <div class="thumb-preview ec-preview">
+                                    <div class="image-thumb-preview">
+                                        <img class="image-thumb-preview ec-image-preview v-img" src="~/assets/images/banner/8.jpg" alt="edit">
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <form class="row g-3" asp-controller="User" asp-action="UpdateProfile" asp-route-message="@ViewData["BuyMessage"]" enctype="multipart/form-data" method="post">
                             <div class="ec-vendor-block-detail">
                                 <div class="thumb-upload">
                                     <div class="thumb-edit">
-                                        <input type='file' id="thumbUpload02" class="ec-image-upload" accept=".png, .jpg, .jpeg">
+                                        <input asp-for="@Model.userImage" type='file' id="thumbUpload02" class="ec-image-upload" accept=".png, .jpg, .jpeg">
                                         <label><img src="~/assets/images/icons/edit.svg" class="svg_img header_svg" alt="edit"></label>
                                     </div>
                                     <div class="thumb-preview ec-preview">
                                         <div class="image-thumb-preview">
-                                            <img class="image-thumb-preview ec-image-preview v-img" src="~/assets/images/user/user-image.jpg" alt="edit">
+                                            @if (Model.user.userImage != null)
+                                            {
+                                                <img class="image-thumb-preview ec-image-preview v-img" src="~/assets/images/user-image/@(Model.user.userImage)" alt="edit">
+                                            }
+                                            else
+                                            {
+                                                <img class="image-thumb-preview ec-image-preview v-img" src="~/assets/images/user-image/default-image.jpg" alt="edit">
+                                            }
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="ec-vendor-upload-detail">
-                                <form class="row g-3">
-                                    <div class="col-md-6 space-t-15">
-                                        <label class="form-label">نام</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="col-md-6 space-t-15">
-                                        <label class="form-label">نام خانوادگی</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="col-md-12 space-t-15">
-                                        <label class="form-label">آدرس1</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="col-md-12 space-t-15">
-                                        <label class="form-label">آدرس2</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="col-md-12 space-t-15">
-                                        <label class="form-label">آدرس3</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="col-md-6 space-t-15">
-                                        <label class="form-label">ایمیل 1</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="col-md-6 space-t-15">
-                                        <label class="form-label">ایمیل 2</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="col-md-6 space-t-15">
-                                        <label class="form-label">شماره تماس 1</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="col-md-6 space-t-15">
-                                        <label class="form-label">شماره تماس 2</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="col-md-12 space-t-15">
-                                        <button type="submit" class="btn btn-primary">به روز رسانی</button>
-                                        <a href="#" class="btn btn-lg btn-secondary qty_close" data-bs-dismiss="modal" aria-label="Close">بستن</a>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+
+                                <div class="col-md-6 space-t-15">
+                                    <label class="form-label">نام</label>
+                                    <input asp-for="@Model.user.Name" type="text" class="form-control" value="@Model.user.Name">
+                                </div>
+                                <div class="col-md-6 space-t-15">
+                                    <label class="form-label">نام خانوادگی</label>
+                                    <input asp-for="@Model.user.Family" type="text" class="form-control" value="@Model.user.Family" required>
+                                </div>
+                                <div class="col-md-12 space-t-15">
+                                    <label class="form-label">آدرس</label>
+                                    <input asp-for="@Model.user.Address" type="text" class="form-control" value="@Model.user.Address" required>
+                                </div>
+                                <div class="col-md-6 space-t-15">
+                                    <label class="form-label">شماره تماس</label>
+                                    <input asp-for="@Model.user.PhoneNumber" type="text" class="form-control" value="@Model.user.PhoneNumber" required>
+                                </div>
+                                <input asp-for="@Model.user.userImage" type="hidden" />
+                                <div class="col-md-12 space-t-15">
+                                    <button type="submit" class="btn btn-primary">به روز رسانی</button>
+                                    <a href="#" class="btn btn-lg btn-secondary qty_close" data-bs-dismiss="modal" aria-label="Close">بستن</a>
+                                </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Modal end -->
-
+</div>
+</div>
+<!-- Modal end -->
