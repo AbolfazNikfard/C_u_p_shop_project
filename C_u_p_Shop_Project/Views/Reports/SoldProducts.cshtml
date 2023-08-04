@@ -42,7 +42,7 @@
                                     {
                                         <tr>
                                             <td>@row.productId</td>
-                                            <td><img class="tbl-thumb" src="~/assets/images/product-image/@(row.productImg)" /></td>
+                                            <td><img style="width:50px;height:50px" class="tbl-thumb" src="~/assets/images/product-image/@(row.productImg)"/></td>
                                             <td>@row.productName</td>
                                             @if (User.IsInRole("Admin"))
                                             {

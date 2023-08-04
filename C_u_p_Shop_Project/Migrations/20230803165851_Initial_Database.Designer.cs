@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CropsShopProject.Migrations
 {
     [DbContext(typeof(CropsShopContext))]
-    [Migration("20230219220943_InitialDataBase")]
-    partial class InitialDataBase
+    [Migration("20230803165851_Initial_Database")]
+    partial class InitialDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -134,12 +134,6 @@ namespace CropsShopProject.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.Property<int>("Weight")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WeightMassUnit")
-                        .HasColumnType("int");
-
                     b.Property<int>("buyerId")
                         .HasColumnType("int");
 
@@ -149,16 +143,11 @@ namespace CropsShopProject.Migrations
                     b.Property<int>("productId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("sellerId")
-                        .HasColumnType("int");
-
                     b.HasKey("id");
 
                     b.HasIndex("buyerId");
 
                     b.HasIndex("productId");
-
-                    b.HasIndex("sellerId");
 
                     b.ToTable("orders");
                 });
@@ -184,19 +173,7 @@ namespace CropsShopProject.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.Property<float>("Stock")
-                        .HasColumnType("real");
-
-                    b.Property<int>("StockMassUnit")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Weight")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WeightMassUnit")
-                        .HasColumnType("int");
-
-                    b.Property<int>("confirmation")
+                    b.Property<int>("Stock")
                         .HasColumnType("int");
 
                     b.Property<int?>("groupId")
@@ -209,9 +186,6 @@ namespace CropsShopProject.Migrations
                     b.Property<DateTime>("registerDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("sellerId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("subGroupId")
                         .HasColumnType("int");
 
@@ -219,34 +193,9 @@ namespace CropsShopProject.Migrations
 
                     b.HasIndex("groupId");
 
-                    b.HasIndex("sellerId");
-
                     b.HasIndex("subGroupId");
 
                     b.ToTable("products");
-                });
-
-            modelBuilder.Entity("Crops_Shop_Project.Models.Seller", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("userId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("userId")
-                        .IsUnique();
-
-                    b.ToTable("sellers");
                 });
 
             modelBuilder.Entity("Crops_Shop_Project.Models.SubGroup", b =>
@@ -337,6 +286,9 @@ namespace CropsShopProject.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("userImage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -539,15 +491,9 @@ namespace CropsShopProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Crops_Shop_Project.Models.Seller", "seller")
-                        .WithMany("orders")
-                        .HasForeignKey("sellerId");
-
                     b.Navigation("buyer");
 
                     b.Navigation("product");
-
-                    b.Navigation("seller");
                 });
 
             modelBuilder.Entity("Crops_Shop_Project.Models.Product", b =>
@@ -556,30 +502,13 @@ namespace CropsShopProject.Migrations
                         .WithMany("product")
                         .HasForeignKey("groupId");
 
-                    b.HasOne("Crops_Shop_Project.Models.Seller", "seller")
-                        .WithMany("products")
-                        .HasForeignKey("sellerId");
-
                     b.HasOne("Crops_Shop_Project.Models.SubGroup", "subGroup")
                         .WithMany("product")
                         .HasForeignKey("subGroupId");
 
                     b.Navigation("group");
 
-                    b.Navigation("seller");
-
                     b.Navigation("subGroup");
-                });
-
-            modelBuilder.Entity("Crops_Shop_Project.Models.Seller", b =>
-                {
-                    b.HasOne("Crops_Shop_Project.Models.User", "user")
-                        .WithOne("seller")
-                        .HasForeignKey("Crops_Shop_Project.Models.Seller", "userId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("Crops_Shop_Project.Models.SubGroup", b =>
@@ -665,13 +594,6 @@ namespace CropsShopProject.Migrations
                     b.Navigation("orders");
                 });
 
-            modelBuilder.Entity("Crops_Shop_Project.Models.Seller", b =>
-                {
-                    b.Navigation("orders");
-
-                    b.Navigation("products");
-                });
-
             modelBuilder.Entity("Crops_Shop_Project.Models.SubGroup", b =>
                 {
                     b.Navigation("product");
@@ -680,9 +602,6 @@ namespace CropsShopProject.Migrations
             modelBuilder.Entity("Crops_Shop_Project.Models.User", b =>
                 {
                     b.Navigation("buyer")
-                        .IsRequired();
-
-                    b.Navigation("seller")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
