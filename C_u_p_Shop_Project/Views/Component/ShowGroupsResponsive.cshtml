@@ -6,7 +6,7 @@
         {
             <ul class="sub-menu">
                 <li>
-                    <a asp-controller="Product" asp-action="ShowProductByGroupId" asp-route-id="@allgroups.groupId">@allgroups.groupName</a>
+                    <a asp-controller="Product" asp-action="ShowProductByGroupId" asp-route-groupId="@allgroups.groupId">@allgroups.groupName</a>
                 </li>
             </ul>
         }
@@ -16,13 +16,13 @@
         @if (groups.subGroops.Count != 0)
         {
             <li>
-                <a asp-controller="Product" asp-action="ShowProductByGroupId" asp-route-id="@groups.groupId">@groups.groupName</a>
+                <a asp-controller="Product" asp-action="ShowProductByGroupId" asp-route-groupId="@groups.groupId">@groups.groupName</a>
 
                 @foreach (var subgroups in groups.subGroops)
                 {
                     <ul class="sub-menu">
                         <li>
-                            <a asp-controller="Product" asp-action="ShowProductBySubGroupId" asp-route-id="@subgroups.id">@subgroups.Name</a>
+                            <a asp-controller="Product" asp-action="ShowProductBySubGroupId" asp-route-subGroupId="@subgroups.id">@subgroups.Name</a>
                         </li>
                     </ul>
                 }

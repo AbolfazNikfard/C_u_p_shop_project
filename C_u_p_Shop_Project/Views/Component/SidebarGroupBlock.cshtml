@@ -16,7 +16,7 @@
                             <ul style="display: none;">
                                 <li>
                                     <div class="ec-sidebar-sub-item">
-                                        <a asp-controller="Product" asp-action="ShowProductByGroupId" asp-route-id="@allgroups.groupId">@allgroups.groupName</a>
+                                        <a asp-controller="Product" asp-action="ShowProductByGroupId" asp-route-groupId="@allgroups.groupId">@allgroups.groupName</a>
                                     </div>
                                 </li>
                             </ul>
@@ -38,7 +38,7 @@
                                     <ul style="display: none;">
                                         <li>
                                             <div class="ec-sidebar-sub-item">
-                                                <a asp-controller="Product" asp-action="ShowProductBySubGroupId" asp-route-id="@subgroups.id">@subgroups.Name</a>
+                                                <a asp-controller="Product" asp-action="ShowProductBySubGroupId" asp-route-subGroupId="@subgroups.id">@subgroups.Name</a>
                                             </div>
                                         </li>
                                     </ul>
@@ -48,54 +48,8 @@
                         </ul>
                     </div>
                 }
-            }         
+            }
         </div>
         <!-- Sidebar Category Block -->
     </div>
 </div>
-<!-- Sidebar Area End -->
-@*<div class="ec-sb-block-content">
-    <ul>
-        <li>
-            <div class="ec-sidebar-block-item">همه</div>
-            <ul>
-                @foreach (var allgroups in Model)
-                {
-                    <li>
-                        <div class="ec-sidebar-sub-item">
-                            <a asp-controller="Product" asp-action="ShowProductByGroupId" asp-route-id="@allgroups.groupId">@allgroups.groupName</a>
-                        </div>
-                    </li>
-                }
-            </ul>
-        </li>
-    </ul>
-</div>
-@foreach (var groups in Model)
-{
-    @if (groups.subGroops.Count != 0)
-    {
-        <div class="ec-sb-block-content">
-
-            <ul>
-                <li>
-                    <div class="ec-sidebar-block-item">@groups.groupName</div>
-
-                    <ul >
-                        @foreach (var subgroup in groups.subGroops)
-                        {
-                            <li>
-                                <div class="ec-sidebar-sub-item">
-                                    <a asp-controller="Product" asp-action="ShowProductBySubGroupId" asp-route-id="@subgroup.id">@subgroup.Name</a>
-                                </div>
-                            </li>
-                        }
-                        <li>
-                    </ul>
-
-                </li>
-            </ul>
-        </div>
-    }
-}*@
-

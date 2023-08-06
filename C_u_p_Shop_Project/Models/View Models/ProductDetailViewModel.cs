@@ -8,6 +8,5 @@
         }
         public Product product { get; set; }
         public List<Comment> comments { get; set; }
-        //public string seller { get; set; }
     }
 }

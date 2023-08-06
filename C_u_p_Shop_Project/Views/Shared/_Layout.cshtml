@@ -137,10 +137,10 @@
                         <div class="align-self-center">
                             <div class="header-search">
 
-                                <form asp-controller="Product" asp-action="ShowProductBySearchInput" method="post" class="ec-btn-group-form">
-                                    <input name="Input" class="form-control" placeholder="نام محصول خود را وارد کنید ..." type="text">
-                                    <button class="submit" type="submit"><img src="~/assets/images/icons/search.svg" class="svg_img header_svg" alt=""></button>
-                                </form>
+                                @*<form asp-controller="Product" asp-action="ShowProductBySearchInput" method="post" class="ec-btn-group-form">*@
+                                <input id="search_input" name="Input" class="form-control" placeholder="نام محصول خود را وارد کنید ..." type="text">
+                                <button id="search_button" class="submit"><img src="~/assets/images/icons/search.svg" class="svg_img header_svg" alt=""></button>
+                                @*</form>*@
 
                             </div>
                         </div>
@@ -222,10 +222,10 @@
                     <div class="col">
                         <div class="header-search">
 
-                            <form asp-controller="Product" asp-action="ShowProductBySearchInput" method="post" class="ec-btn-group-form">
-                                <input name="Input" class="form-control" placeholder="نام محصول خود را وارد کنید ..." type="text">
-                                <button class="submit" type="submit"><img src="~/assets/images/icons/search.svg" class="svg_img header_svg" alt="icon"></button>
-                            </form>
+                            @*<form asp-controller="Product" asp-action="ShowProductBySearchInput" method="post" class="ec-btn-group-form">*@
+                            <input id="search_input_responsive" name="Input" class="form-control" placeholder="نام محصول خود را وارد کنید ..." type="text">
+                            <button id="search_button_responsive" class="submit search_button"><img src="~/assets/images/icons/search.svg" class="svg_img header_svg" alt="icon"></button>
+                            @*</form>*@
 
                         </div>
                     </div>

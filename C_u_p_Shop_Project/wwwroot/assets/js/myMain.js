@@ -5,7 +5,7 @@ $("body").on("click", ".ec_qtybtn", function () {
     let t = $(this),
         o = t.parent().find("input").val();
     let s = o;
-    if ("+" === t.text() && o<100)
+    if ("+" === t.text() && o < 100)
         s = parseFloat(o) + 1;
     else if ("-" === t.text() && o > 1)
         s = parseFloat(o) - 1;

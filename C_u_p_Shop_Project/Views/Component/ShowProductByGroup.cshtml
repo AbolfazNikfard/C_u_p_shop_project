@@ -42,25 +42,25 @@
                             </div>
                         </div>
                         @*<form asp-controller="Product" asp-action="ShowProductByFilter"  method="post">
-                            <input type="hidden" id="Products" name="Products" value="@Model" />*@
-                            <div class="col-md-6 ec-sort-select">
+                    <input type="hidden" id="Products" name="Products" value="@Model" />*@
+                        <div class="col-md-6 ec-sort-select">
 
                             <a><button type="submit"><img src="~/assets/images/icons/filter.svg" class="svg_img pro_svg" alt="اعمال فیلتر"></button></a>&nbsp
-                                <span class="sort-by">چینش بر اساس</span>
-                                <div class="ec-select-inner">
+                            <span class="sort-by">چینش بر اساس</span>
+                            <div class="ec-select-inner">
 
-                                    <select id="Filter" name="Filter">
-                                        <option value="" selected>-</option>
-                                        <option value="Newest">جدیدترین</option>
-                                        <option value="Oldest"> قدیمی ترین</option>
-                                        <option value="Alphabet">نام، الف تا ی</option>
-                                        <option value="ReverseAlphabet">نام، ی تا الف</option>
-                                        <option value="CheapToExpensive">قیمت، کم به زیاد</option>
-                                        <option value="ExpensiveToCheap">قیمت، زیاد به کم</option>
-                                    </select>
+                                <select id="Filter" name="Filter">
+                                    <option value="null" selected>-</option>
+                                    <option value="Newest">جدیدترین</option>
+                                    <option value="Oldest"> قدیمی ترین</option>
+                                    <option value="AlphabetAscending">نام، الف تا ی</option>
+                                    <option value="AlphabetDescending">نام، ی تا الف</option>
+                                    <option value="CheapToExpensive">قیمت، کم به زیاد</option>
+                                    <option value="ExpensiveToCheap">قیمت، زیاد به کم</option>
+                                </select>
 
-                                </div>
                             </div>
+                        </div>
                         @*</form>*@
                     </div>
                     <!-- Shop Top End -->
@@ -101,20 +101,6 @@
                                                 </div>
                                                 <div class="ec-pro-list-desc"> @product.Description </div>
                                                 <span class="new-price">
-                                                    @* @product.Weight
-                                                    @if (product.WeightMassUnit == UnitOFMassMeasurement.Gram)
-                                                    {
-                                                        <span>گرم</span>
-                                                    }
-                                                    else if (product.WeightMassUnit == UnitOFMassMeasurement.Kg)
-                                                    {
-                                                        <span>کیلوگرم</span>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span>تن</span>
-                                                    } *@
-                                                    @* &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp *@
                                                     @{
                                                         ShowReadablePrice = (ulong)product.Price;
                                                     }
@@ -132,9 +118,20 @@
                         <div class="ec-pro-pagination">
                             <span>&nbsp</span>
                             <!-- <span>نمایش 1-12 از 21 مورد</span> -->
-                            <ul class="ec-pro-pagination-inner">
+                            <ul id="pagesContainer" class="ec-pro-pagination-inner">
                                 <li><a class="next" href="#"><i class="ecicon eci-angle-right"></i>&nbspقبلی </a></li>
-                                <li><a class="active" href="#">1</a></li>                                
+
+                                @for (int i = 1; i <= int.Parse(ViewData["pagesCount"].ToString()); i++)
+                                {
+                                    if (ViewData["page"].Equals(i))
+                                    {
+                                        <li><a class="active">@i</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a>@i</a></li>
+                                    }
+                                }
                                 <li><a class="next" href="#">بعدی<i class="ecicon eci-angle-left"></i></a></li>
                             </ul>
                         </div>
@@ -151,4 +148,5 @@
         </div>
     </div>
 </section>
-
+<script src="~/assets/js/plugins/pagination.js?version=2"></script>
+<script src="~/assets/js/plugins/filter.js?version=2"></script>
