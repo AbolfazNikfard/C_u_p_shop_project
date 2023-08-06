@@ -23,7 +23,7 @@ namespace Crops_Shop_Project.Controllers
             {
                 if (page < 1)
                     return BadRequest(new { StatusCode = 400, message = "page number should be greater than 0" });
-                int limit = 4;
+                int limit = 8;
                 int skip = (page - 1) * limit;
                 double productCount, result;
 
@@ -49,7 +49,7 @@ namespace Crops_Shop_Project.Controllers
                     productViewModel = filter.sorted_Products(products, sort, skip, limit);
                 else
                     productViewModel = products.Skip(skip).Take(limit).ToList();
-                if (productViewModel == null) { return NotFound(); }
+             
                 return View(productViewModel);
             }
             catch (Exception e)
@@ -63,7 +63,7 @@ namespace Crops_Shop_Project.Controllers
             {
                 if (page < 1)
                     return BadRequest(new { StatusCode = 400, message = "page number should be greater than 0" });
-                int limit = 4;
+                int limit = 8;
                 int skip = (page - 1) * limit;
                 double productCount, result;
 
@@ -90,7 +90,6 @@ namespace Crops_Shop_Project.Controllers
                 else
                     productViewModel = products.Skip(skip).Take(limit).ToList();
 
-                if (productViewModel == null) { return NotFound(); }
                 return View(productViewModel);
             }
             catch (Exception e)
@@ -100,20 +99,26 @@ namespace Crops_Shop_Project.Controllers
         }
         public IActionResult ProductDetails(int productId, string? addToCartMessage)
         {
-            if (addToCartMessage == null)
-                ViewData["Message"] = "";
-            else
-                ViewData["Message"] = addToCartMessage;
-            var product = _context.products
-                .Where(p => p.id == productId).SingleOrDefault();
-            if (product == null) { return NotFound(); }
-            var comments = _context.comments.Where(c => c.productId == productId).ToList();
-            ProductDetailViewModel productDetailViewModel = new ProductDetailViewModel
+            try
             {
-                product = product,
-                comments = comments,
-            };
-            return View(productDetailViewModel);
+                if (addToCartMessage == null)
+                    ViewData["Message"] = "";
+                else
+                    ViewData["Message"] = addToCartMessage;
+                var product = _context.products.Where(p => p.id == productId).SingleOrDefault();
+                if (product == null) { return NotFound(); }
+                List<Comment> comments = _context.comments.Where(c => c.productId == productId).ToList();
+                ProductDetailViewModel productDetailViewModel = new ProductDetailViewModel
+                {
+                    product = product,
+                    comments = comments,
+                };
+                return View(productDetailViewModel);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500);
+            }
         }
     }
 }

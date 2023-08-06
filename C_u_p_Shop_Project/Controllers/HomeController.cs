@@ -21,7 +21,7 @@ namespace Crops_Shop_Project.Controllers
             if (page < 1)
                 return BadRequest(new { StatusCode = 400, message = "page number should be greater than 0" });
 
-            int limit = 4;
+            int limit = 8;
             int skip = (page - 1) * limit;
             double productCount, result;
 

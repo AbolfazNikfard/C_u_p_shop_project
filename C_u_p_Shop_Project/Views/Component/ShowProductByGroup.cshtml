@@ -117,22 +117,82 @@
                         <!-- Ec Pagination Start -->
                         <div class="ec-pro-pagination">
                             <span>&nbsp</span>
-                            <!-- <span>نمایش 1-12 از 21 مورد</span> -->
-                            <ul id="pagesContainer" class="ec-pro-pagination-inner">
-                                <li><a class="next" href="#"><i class="ecicon eci-angle-right"></i>&nbspقبلی </a></li>
 
-                                @for (int i = 1; i <= int.Parse(ViewData["pagesCount"].ToString()); i++)
+                            @{
+                                int page = int.Parse(ViewData["page"].ToString());
+                                int pageCount = int.Parse(ViewData["pagesCount"].ToString());
+                            }
+                            <span id="activePage" style="display:none">@int.Parse(ViewData["page"].ToString());</span>
+                            <span id="pagesCount" style="display:none">@int.Parse(ViewData["pagesCount"].ToString());</span>
+                            <ul id="pagesContainer" class="ec-pro-pagination-inner">
+                                @if (page != 1)
                                 {
-                                    if (ViewData["page"].Equals(i))
+                                    <li><a class="next" onclick="previousPage()"><i class="ecicon eci-angle-right"></i>&nbspقبلی </a></li>
+                                }
+                                @if (pageCount <= 8)
+                                {
+                                    @for (int i = 1; i <= pageCount; i++)
                                     {
-                                        <li><a class="active">@i</a></li>
+                                        if (i == page)
+                                        {
+                                            <li><a class="active">@i</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a>@i</a></li>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (page >= 4)
+                                    {
+                                        @for (int i = page - 3; i <= page; i++)
+                                        {
+                                            if (i == page)
+                                            {
+                                                <li><a class="active">@i</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li><a>@i</a></li>
+                                            }
+                                        }
+
                                     }
                                     else
                                     {
-                                        <li><a>@i</a></li>
+                                        @for (int i = 1; i <= page; i++)
+                                        {
+                                            if (i == page)
+                                            {
+                                                <li><a class="active">@i</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li><a>@i</a></li>
+                                            }
+                                        }
+                                    }
+                                    if (page + 4 <= pageCount)
+                                    {
+                                        @for (int i = page + 1; i <= page + 4; i++)
+                                        {
+                                            <li><a>@i</a></li>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        @for (int i = page + 1; i <= pageCount; i++)
+                                        {
+                                            <li><a>@i</a></li>
+                                        }
                                     }
                                 }
-                                <li><a class="next" href="#">بعدی<i class="ecicon eci-angle-left"></i></a></li>
+                                @if (page != pageCount)
+                                {
+                                    <li><a class="next" onclick="nextpage()">بعدی<i class="ecicon eci-angle-left"></i></a></li>
+                                }
                             </ul>
                         </div>
                         <!-- Ec Pagination End -->
@@ -148,5 +208,5 @@
         </div>
     </div>
 </section>
-<script src="~/assets/js/plugins/pagination.js?version=2"></script>
+<script src="~/assets/js/plugins/pagination.js?version=3"></script>
 <script src="~/assets/js/plugins/filter.js?version=2"></script>
