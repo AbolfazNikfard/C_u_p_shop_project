@@ -1,11 +1,11 @@
-﻿using Crops_Shop_Project.Data;
-using Crops_Shop_Project.Models;
-using Crops_Shop_Project.Models.View_Models;
-using Crops_Shop_Project.Shared;
+﻿using C_u_p_Shop_Project.Data;
+using C_u_p_Shop_Project.Models;
+using C_u_p_Shop_Project.Models.View_Models;
+using C_u_p_Shop_Project.Shared;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Crops_Shop_Project.Controllers
+namespace C_u_p_Shop_Project.Controllers
 {
     public class ProductController : Controller
     {
@@ -54,6 +54,7 @@ namespace Crops_Shop_Project.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine($"Catched Error: {e.Message}");
                 return StatusCode(500);
             }
         }
@@ -94,17 +95,14 @@ namespace Crops_Shop_Project.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine($"Catched Error: {e.Message}");
                 return StatusCode(500);
             }
         }
-        public IActionResult ProductDetails(int productId, string? addToCartMessage)
+        public IActionResult ProductDetails(int productId)
         {
             try
-            {
-                if (addToCartMessage == null)
-                    ViewData["Message"] = "";
-                else
-                    ViewData["Message"] = addToCartMessage;
+            {              
                 var product = _context.products.Where(p => p.id == productId).SingleOrDefault();
                 if (product == null) { return NotFound(); }
                 List<Comment> comments = _context.comments.Where(c => c.productId == productId).ToList();
@@ -117,6 +115,7 @@ namespace Crops_Shop_Project.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine($"Catched Error: {e.Message}");
                 return StatusCode(500);
             }
         }

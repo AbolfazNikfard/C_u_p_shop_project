@@ -1,4 +1,4 @@
-﻿namespace Crops_Shop_Project.Models.ApiModel
+﻿namespace C_u_p_Shop_Project.Models.ApiModel
 {
     public class addToCart
     {

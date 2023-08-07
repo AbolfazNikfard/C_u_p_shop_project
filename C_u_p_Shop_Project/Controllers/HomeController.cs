@@ -1,19 +1,16 @@
-﻿using Crops_Shop_Project.Data;
-using Crops_Shop_Project.Models;
-using Crops_Shop_Project.Shared;
+﻿using C_u_p_Shop_Project.Data;
+using C_u_p_Shop_Project.Models;
+using C_u_p_Shop_Project.Shared;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
-namespace Crops_Shop_Project.Controllers
+namespace C_u_p_Shop_Project.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private CropsShopContext _context;
-        public HomeController(ILogger<HomeController> logger, CropsShopContext context)
+        public HomeController(CropsShopContext context)
         {
-            _logger = logger;
             _context = context;
         }
         public IActionResult Index(int page = 1, string sort = null, string search = null)

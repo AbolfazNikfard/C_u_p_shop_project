@@ -1,6 +1,6 @@
-﻿using Crops_Shop_Project.Models;
+﻿using C_u_p_Shop_Project.Models;
 
-namespace Crops_Shop_Project.Shared
+namespace C_u_p_Shop_Project.Shared
 {
     public static class filter
     {

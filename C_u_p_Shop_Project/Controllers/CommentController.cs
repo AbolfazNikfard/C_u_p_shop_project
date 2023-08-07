@@ -1,9 +1,9 @@
-﻿using Crops_Shop_Project.Data;
-using Crops_Shop_Project.Models;
+﻿using C_u_p_Shop_Project.Data;
+using C_u_p_Shop_Project.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Crops_Shop_Project.Controllers
+namespace C_u_p_Shop_Project.Controllers
 {
     [Authorize(Roles ="Admin,Seller,Buyer")]
     public class CommentController : Controller
@@ -29,9 +29,10 @@ namespace Crops_Shop_Project.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("ProductDetails", "Product", new { productId = productId });
             }
-            catch(Exception e) 
+            catch (Exception e)
             {
-                return NotFound();
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
             }
         }
     }

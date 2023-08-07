@@ -1,7 +1,9 @@
-﻿
-@*@{
-    ViewData["Title"] = "numberOfUserCartItem";
-}*@
-
-<span class="ec-header-count" style="background-color:red">@ViewData["NumberOfCartItem"]</span>
+﻿@if (ViewData["ForWhere"].Equals("header"))
+{
+    <span class="ec-header-count" style="background-color:red">@ViewData["NumberOfCartItem"]</span>
+}
+else
+{
+    <span class="ec-cart-noti ec-header-count cart-count-lable">@ViewData["NumberOfCartItem"]</span>
+}
 

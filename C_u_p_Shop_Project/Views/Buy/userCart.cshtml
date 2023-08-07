@@ -20,8 +20,6 @@
                     <div class="col-md-6 col-sm-12">
                         <!-- ec-breadcrumb-list start -->
                         <ul class="ec-breadcrumb-list">
-                            @*<li class="ec-breadcrumb-item"><a href="index.html">خانه</a></li>
-                            <li class="ec-breadcrumb-item active">سبد خرید</li>*@
                         </ul>
                         <!-- ec-breadcrumb-list end -->
                     </div>
@@ -52,7 +50,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>شناسه محصول</th>
-                                                    <th>نام محصول</th>                                                   
+                                                    <th>نام محصول</th>
                                                     <th style="text-align: center;">تعداد</th>
                                                     <th>قیمت</th>
                                                     <th>کل</th>
@@ -72,7 +70,11 @@
 
                                                         <td>
                                                             <div class="cart-qty-plus-minus">
-                                                                <input asp-for="@(Model[i].selectedNumberOfProducts)" type="text" maxlength="3" value="@Model[i].selectedNumberOfProducts">
+                                                                <input asp-for="@(Model[i].selectedNumberOfProducts)" type="text" maxlength="2" value="@Model[i].selectedNumberOfProducts">
+                                                                <div class="ec_cart_qtybtn">
+                                                                    <div class="inc ec_qtybtn">+</div>
+                                                                    <div class="dec ec_qtybtn">-</div>
+                                                                </div>
                                                             </div>
                                                         </td>
 

@@ -1,12 +1,12 @@
-﻿using Crops_Shop_Project.Data;
-using Crops_Shop_Project.Models;
-using Crops_Shop_Project.Models.View_Models;
+﻿using C_u_p_Shop_Project.Data;
+using C_u_p_Shop_Project.Models;
+using C_u_p_Shop_Project.Models.View_Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Crops_Shop_Project.Controllers
+namespace C_u_p_Shop_Project.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
@@ -24,32 +24,48 @@ namespace Crops_Shop_Project.Controllers
         }
         public IActionResult BuyerList()
         {
-            var buyers = _context.buyers
-                .Include(o => o.orders).Include(u => u.user)
-                .Select(b => new BuyerListViewModel
-                {
-                    Id = b.id,
-                    Name = b.user.Name,
-                    Family = b.user.Family,
-                    Email = b.user.Email,
-                    boughtNumber = b.orders.Sum(o => o.Number)
-                }).ToList();
-            return View(buyers);
+            try
+            {
+                var buyers = _context.buyers
+                    .Include(o => o.orders).Include(u => u.user)
+                    .Select(b => new BuyerListViewModel
+                    {
+                        Id = b.id,
+                        Name = b.user.Name,
+                        Family = b.user.Family,
+                        Email = b.user.Email,
+                        boughtNumber = b.orders.Sum(o => o.Number)
+                    }).ToList();
+                return View(buyers);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
+            }
         }
         #region EditUser
         [HttpGet]
         public async Task<IActionResult> EditUser(string userEmail)
         {
-            var user = await _userManager.FindByEmailAsync(userEmail);
-            if (user == null) { return NotFound(); }
-            UserViewModel userModel = new UserViewModel
+            try
             {
-                user = user
-            };
-            return View(userModel);
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null) { return NotFound(); }
+                UserViewModel userModel = new UserViewModel
+                {
+                    user = user
+                };
+                return View(userModel);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
+            }
         }
         [HttpPost]
-        public async Task<IActionResult> EditUser(UserViewModel updateUser)
+        public async Task<IActionResult> EditUser([FromForm] UserViewModel updateUser)
         {
             try
             {
@@ -111,8 +127,8 @@ namespace Crops_Shop_Project.Controllers
             }
             catch (Exception e)
             {
-                ModelState.AddModelError("", $"مشکل {e} در ثبت نام پیش آمده است");
-                return View(updateUser);
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
             }
         }
         #endregion
@@ -124,18 +140,17 @@ namespace Crops_Shop_Project.Controllers
                 var user = await _userManager.FindByEmailAsync(userEmail);
                 if (user == null) { return NotFound(); }
 
-                var roleName = await _userManager.GetRolesAsync(user);
-                if (roleName[0] == "Buyer")
-                {
-                    var buyer = _context.buyers.SingleOrDefault(b => b.userId == user.Id);
-                    if (buyer == null) { return NotFound(); }
-                    buyer.IsDelete = true;
-                    _context.buyers.Update(buyer);
-                }
+                var buyer = _context.buyers.SingleOrDefault(b => b.userId == user.Id);
+                if (buyer == null) { return NotFound(); }
+                buyer.IsDelete = true;
+
+                _context.buyers.Update(buyer);
                 user.IsDelete = true;
+
                 var result = await _userManager.UpdateAsync(user);
                 if (!result.Succeeded)
-                    return NotFound();
+                    return StatusCode(500);
+
                 _context.SaveChanges();
 
             }
@@ -149,16 +164,24 @@ namespace Crops_Shop_Project.Controllers
         #region Group
         public IActionResult addGroup()
         {
-            var groupsWithSubgroups = _context.groups
-                .Include(sg => sg.subGroups).Include(p => p.product)
-                .Select(g => new GroupWithSubGroupsWithProductsViewModel
-                {
-                    groupId = g.id,
-                    groupName = g.Name,
-                    productNumber = g.product.Count(),
-                    subGroups = g.subGroups.ToList()
-                }).ToList();
-            return View(groupsWithSubgroups);
+            try
+            {
+                var groupsWithSubgroups = _context.groups
+                    .Include(sg => sg.subGroups).Include(p => p.product)
+                    .Select(g => new GroupWithSubGroupsWithProductsViewModel
+                    {
+                        groupId = g.id,
+                        groupName = g.Name,
+                        productNumber = g.product.Count(),
+                        subGroups = g.subGroups.ToList()
+                    }).ToList();
+                return View(groupsWithSubgroups);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
+            }
         }
         [HttpPost]
         public IActionResult addGroup(string name)
@@ -179,7 +202,8 @@ namespace Crops_Shop_Project.Controllers
             }
             catch (Exception e)
             {
-                return NotFound();
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
             }
         }
         public IActionResult DeleteGroup(int groupId)
@@ -195,17 +219,26 @@ namespace Crops_Shop_Project.Controllers
             }
             catch (Exception e)
             {
-                return NotFound();
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
             }
         }
         public IActionResult EditGroup(int groupId)
         {
-            var group = _context.groups.SingleOrDefault(g => g.id == groupId);
-            if (group == null) { return NotFound(); }
-            return View(group);
+            try
+            {
+                var group = _context.groups.SingleOrDefault(g => g.id == groupId);
+                if (group == null) { return NotFound(); }
+                return View(group);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
+            }
         }
         [HttpPost]
-        public IActionResult EditGroup(Group group)
+        public IActionResult EditGroup([FromForm] Group group)
         {
             try
             {
@@ -220,29 +253,38 @@ namespace Crops_Shop_Project.Controllers
             }
             catch (Exception e)
             {
-                return NotFound();
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
             }
         }
         #endregion
         #region SubGroup
         public IActionResult addSubGroup()
         {
-            var groups = _context.groups.ToList();
-            var subGroups = _context.subGroups
-                .Include(g => g.parentGroup).Include(p => p.product)
-                .Select(sg => new SubGroup_With_It_ProductsNumber_ViewModel
-                {
-                    subgroupId = sg.id,
-                    subgroupName = sg.Name,
-                    productNumber = sg.product.Count(),
-                    parentGroupName = sg.parentGroup.Name
-                }).ToList();
-            addSubgroupViewModel addSubgroupView = new addSubgroupViewModel
+            try
             {
-                subgroups = subGroups,
-                groups = groups
-            };
-            return View(addSubgroupView);
+                var groups = _context.groups.ToList();
+                var subGroups = _context.subGroups
+                    .Include(g => g.parentGroup).Include(p => p.product)
+                    .Select(sg => new SubGroup_With_It_ProductsNumber_ViewModel
+                    {
+                        subgroupId = sg.id,
+                        subgroupName = sg.Name,
+                        productNumber = sg.product.Count(),
+                        parentGroupName = sg.parentGroup.Name
+                    }).ToList();
+                addSubgroupViewModel addSubgroupView = new addSubgroupViewModel
+                {
+                    subgroups = subGroups,
+                    groups = groups
+                };
+                return View(addSubgroupView);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
+            }
         }
         [HttpPost]
         public IActionResult addsubGroup(string name, int parentId)
@@ -264,25 +306,34 @@ namespace Crops_Shop_Project.Controllers
             }
             catch (Exception e)
             {
-                return NotFound();
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
             }
         }
         public IActionResult EditSubGroup(int subGroupId)
         {
-            var Groups = _context.groups.ToList();
-            var subGroup = _context.subGroups.SingleOrDefault(sg => sg.id == subGroupId);
-            if (subGroup == null) { return NotFound(); }
-            EditSubGroupViewModel model = new EditSubGroupViewModel
+            try
             {
-                subGroupId = subGroupId,
-                subgroupName = subGroup.Name,
-                parentGroupId = subGroup.parentGroupId,
-                groups = Groups
-            };
-            return View(model);
+                var Groups = _context.groups.ToList();
+                var subGroup = _context.subGroups.SingleOrDefault(sg => sg.id == subGroupId);
+                if (subGroup == null) { return NotFound(); }
+                EditSubGroupViewModel model = new EditSubGroupViewModel
+                {
+                    subGroupId = subGroupId,
+                    subgroupName = subGroup.Name,
+                    parentGroupId = subGroup.parentGroupId,
+                    groups = Groups
+                };
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
+            }
         }
         [HttpPost]
-        public IActionResult EditSubGroup(EditSubGroupViewModel model)
+        public IActionResult EditSubGroup([FromForm] EditSubGroupViewModel model)
         {
             try
             {
@@ -301,7 +352,8 @@ namespace Crops_Shop_Project.Controllers
             }
             catch (Exception e)
             {
-                return NotFound();
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
             }
         }
         public IActionResult DeleteSubGroup(int subGroupId)
@@ -315,7 +367,11 @@ namespace Crops_Shop_Project.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("addSubGroup", "Admin");
             }
-            catch (Exception e) { return NotFound(); }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
+            }
         }
         #endregion
     }

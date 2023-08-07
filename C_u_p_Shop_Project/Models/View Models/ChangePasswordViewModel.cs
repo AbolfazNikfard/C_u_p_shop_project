@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 
-namespace Crops_Shop_Project.Models.View_Models
+namespace C_u_p_Shop_Project.Models.View_Models
 {
     public class ChangePasswordViewModel
     {

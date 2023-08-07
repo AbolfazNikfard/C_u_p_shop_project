@@ -1,8 +1,8 @@
-﻿using Crops_Shop_Project.Data;
-using Crops_Shop_Project.Enum;
-using Crops_Shop_Project.Models;
-using Crops_Shop_Project.Models.ApiModel;
-using Crops_Shop_Project.Models.View_Models;
+﻿using C_u_p_Shop_Project.Data;
+using C_u_p_Shop_Project.Enum;
+using C_u_p_Shop_Project.Models;
+using C_u_p_Shop_Project.Models.ApiModel;
+using C_u_p_Shop_Project.Models.View_Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +11,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Plugins;
 
-namespace Crops_Shop_Project.Controllers
+namespace C_u_p_Shop_Project.Controllers
 {
     [Authorize(Roles = "Buyer")]
     public class BuyController : Controller
@@ -29,64 +29,66 @@ namespace Crops_Shop_Project.Controllers
             return View();
         }
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> addToCart([FromBody] addToCart model)
         {
-            try{
-            #region Validation OF number
-            bool isNumber;
-            isNumber = int.TryParse(model.number, out int quntity);
-            if (isNumber == false)
+            try
             {
-                return this.BadRequest();
-            }
-            if (quntity >= 100)
-            {
-                return Ok(new { message = "Too large" });
-            }
-            #endregion
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            if (user == null) { return NotFound(); }
-
-            var buyer = _context.buyers.SingleOrDefault(b => b.userId == user.Id);
-            if (buyer == null) { return NotFound(); }
-
-            var product = _context.products.SingleOrDefault(p => p.id == model.productId);
-            if (product == null) { return NotFound(); }
-
-            if (product.Stock > 0)
-            {
-                var cartItem = _context.carts.Where(r => r.productId == product.id && r.buyerId == buyer.id).SingleOrDefault();
-                #region Validation
-                if (quntity > product.Stock)
-                    return Ok(new { message = "More than stock" });
-                #endregion
-                if (cartItem == null)
+                #region Validation OF number
+                bool isNumber;
+                isNumber = int.TryParse(model.number, out int quntity);
+                if (isNumber == false)
                 {
-                    _context.carts.Add(new Cart
+                    return this.BadRequest();
+                }
+                if (quntity >= 100)
+                {
+                    return Ok(new { message = "Too large" });
+                }
+                #endregion
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                if (user == null) { return NotFound(); }
+
+                var buyer = _context.buyers.SingleOrDefault(b => b.userId == user.Id);
+                if (buyer == null) { return NotFound(); }
+
+                var product = _context.products.SingleOrDefault(p => p.id == model.productId);
+                if (product == null) { return NotFound(); }
+
+                if (product.Stock > 0)
+                {
+                    var cartItem = _context.carts.Where(r => r.productId == product.id && r.buyerId == buyer.id).SingleOrDefault();
+                    #region Validation
+                    if (quntity > product.Stock)
+                        return Ok(new { message = "More than stock" });
+                    #endregion
+                    if (cartItem == null)
                     {
-                        Number = quntity,
-                        productId = product.id,
-                        buyerId = buyer.id
-                    });
+                        _context.carts.Add(new Cart
+                        {
+                            Number = quntity,
+                            productId = product.id,
+                            buyerId = buyer.id
+                        });
+                    }
+                    else
+                    {
+                        if (cartItem.Number + quntity >= 1000)
+                            return Ok(new { message = "Too large" });
+                        cartItem.Number += quntity;
+                        _context.carts.Update(cartItem);
+
+                    }
+                    _context.SaveChanges();
                 }
                 else
-                {
-                    if (cartItem.Number + quntity >= 1000)
-                        return Ok(new { message = "Too large" });
-                    cartItem.Number += quntity;
-                    _context.carts.Update(cartItem);
+                    return Ok(new { message = "Stock not enough" });
 
-                }
-                _context.SaveChanges();
+                return Ok(new { message = "Success" });
             }
-            else
-                return Ok(new { message = "Stock not enough" });
-
-            return Ok(new { message = "Success" });
-            }
-            catch(Exception e){
-                 return StatusCode(500);
+            catch (Exception e)
+            {
+                Console.WriteLine($"catche error: {e.Message}");
+                return StatusCode(500);
             }
         }
         public async Task<IActionResult> userCart()
@@ -105,15 +107,13 @@ namespace Crops_Shop_Project.Controllers
                     productName = i.product.Name,
                     productImage = i.product.productImage,
                     productPrice = i.product.Price,
-                    // productWeight = i.product.Weight,
-                    // productWeightUnit = i.product.WeightMassUnit,
                     selectedNumberOfProducts = i.Number.ToString()
                 }
                 ).ToList();
             return View(userCart);
         }
         [HttpPost]
-        public async Task<IActionResult> userCart(List<CartViewModel> carts, bool forPurchase)
+        public async Task<IActionResult> userCart([FromForm] List<CartViewModel> carts, bool forPurchase)
         {
             try
             {
@@ -131,31 +131,11 @@ namespace Crops_Shop_Project.Controllers
                         ModelState.AddModelError("", "تعداد محصول وارد شده معتبر نیست");
                         return View(carts);
                     }
-                    // if ((sortCarts[i].productWeightUnit == UnitOFMassMeasurement.Gram && products[i].StockMassUnit == UnitOFMassMeasurement.Kg)
-                    //     || (sortCarts[i].productWeightUnit == UnitOFMassMeasurement.Kg && products[i].StockMassUnit == UnitOFMassMeasurement.Tonne))
-                    // {
-                    //     if ((int.Parse(sortCarts[i].selectedNumberOfProducts) * sortCarts[i].productWeight / Math.Pow(10, 3)) > products[i].Stock)
-                    //     {
-                    //         ModelState.AddModelError("", "موجودی محصول با شناسه " + products[i].id + " کافی نیست");
-                    //         return View(carts);
-                    //     }
-                    // }
-                    // else if (sortCarts[i].productWeightUnit == UnitOFMassMeasurement.Gram && products[i].StockMassUnit == UnitOFMassMeasurement.Tonne)
-                    // {
-                    //     if ((int.Parse(sortCarts[i].selectedNumberOfProducts) * sortCarts[i].productWeight / Math.Pow(10, 6)) > products[i].Stock)
-                    //     {
-                    //         ModelState.AddModelError("", "موجودی محصول با شناسه " + products[i].id + " کافی نیست");
-                    //         return View(carts);
-                    //     }
-                    // }
-                    // else
-                    // {
-                    if (int.Parse(sortCarts[i].selectedNumberOfProducts) > products[i].Stock)
+                    if (result > products[i].Stock)
                     {
                         ModelState.AddModelError("", "موجودی محصول با شناسه " + products[i].id + " کافی نیست");
                         return View(carts);
                     }
-                    //}
                 }
                 #endregion
                 var user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -185,9 +165,8 @@ namespace Crops_Shop_Project.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine($"catche error: {e}");
-                ModelState.AddModelError("", "مشکلی پیش آمده است لطفا بعدا امتحان کنید");
-                return View(carts);
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
             }
         }
         public async Task<IActionResult> CompletePurchaseAndPayment()
@@ -202,11 +181,11 @@ namespace Crops_Shop_Project.Controllers
 
                 if (user.PhoneNumber == null || user.Address == null)
                     return RedirectToAction("Profile", "User", new { message = "Buy" });
+
                 var buyerCart = _context.carts.Where(c => c.buyerId == buyer.id)
                     .Include(c => c.product)
                     .ToList();
-                if (buyerCart == null) { return NotFound(); }
-
+                
                 List<Order> orders = new List<Order>();
                 for (int i = 0; i < buyerCart.Count; i++)
                 {
@@ -214,11 +193,8 @@ namespace Crops_Shop_Project.Controllers
                     {
                         buyerId = buyer.id,
                         productId = buyerCart[i].productId,
-                        // Weight = buyerCart[i].product.Weight,
-                        // WeightMassUnit = buyerCart[i].product.WeightMassUnit,
                         Price = buyerCart[i].product.Price,
                         Number = buyerCart[i].Number,
-                        //sellerId = buyerCart[i].product.sellerId,
                         orderDateTime = DateTime.Now,
                     });
                 }
@@ -228,24 +204,17 @@ namespace Crops_Shop_Project.Controllers
                 var sortBuyerCart = buyerCart.OrderBy(c => c.productId).ToList();
                 for (int i = 0; i < sortBuyerCart.Count; i++)
                 {
-                    // if ((products[i].WeightMassUnit == UnitOFMassMeasurement.Gram && products[i].StockMassUnit == UnitOFMassMeasurement.Kg)
-                    //     || (products[i].WeightMassUnit == UnitOFMassMeasurement.Kg && products[i].StockMassUnit == UnitOFMassMeasurement.Tonne))
-                    //     products[i].Stock -= (float)(sortBuyerCart[i].Number * products[i].Weight / Math.Pow(10, 3));
-                    // else if (products[i].WeightMassUnit == UnitOFMassMeasurement.Gram && products[i].StockMassUnit == UnitOFMassMeasurement.Tonne)
-                    //     products[i].Stock -= (float)(sortBuyerCart[i].Number * products[i].Weight / Math.Pow(10, 6));
-                    // else
                     products[i].Stock -= sortBuyerCart[i].Number; //* products[i].Weight);
                 }
                 _context.products.UpdateRange(products);
-                //_context.RemoveRange(buyerCart);
                 _context.orders.AddRange(orders);
                 _context.SaveChangesAsync();
                 return RedirectToAction("Factor");
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                return NoContent();
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
             }
         }
         public async Task<IActionResult> Factor()
@@ -266,8 +235,6 @@ namespace Crops_Shop_Project.Controllers
                         productId = i.productId,
                         productName = i.product.Name,
                         productPrice = i.product.Price,
-                        // productWeight = i.product.Weight,
-                        // productWeightUnit = i.product.WeightMassUnit,
                         selectedNumberOfProducts = i.Number.ToString()
                     }
                     ).ToList();
@@ -283,8 +250,8 @@ namespace Crops_Shop_Project.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                return NoContent();
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
             }
         }
         public async Task<IActionResult> deleteItemFromCart(int productId)
@@ -306,8 +273,8 @@ namespace Crops_Shop_Project.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                return NoContent();
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
             }
         }
     }

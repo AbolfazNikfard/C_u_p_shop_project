@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Crops_Shop_Project.Models
+namespace C_u_p_Shop_Project.Models
 {
     public class RegisterViewModel
     {

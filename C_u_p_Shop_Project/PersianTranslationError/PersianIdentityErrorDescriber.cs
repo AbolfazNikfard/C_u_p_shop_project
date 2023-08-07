@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Crops_Shop_Project.PersianTranslationError
+namespace C_u_p_Shop_Project.PersianTranslationError
 {
     public class PersianIdentityErrorDescriber : IdentityErrorDescriber
     {

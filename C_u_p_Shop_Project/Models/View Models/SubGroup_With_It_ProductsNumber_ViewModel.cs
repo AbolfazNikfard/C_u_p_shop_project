@@ -1,4 +1,4 @@
-﻿namespace Crops_Shop_Project.Models.View_Models
+﻿namespace C_u_p_Shop_Project.Models.View_Models
 {
     public class SubGroup_With_It_ProductsNumber_ViewModel
     {

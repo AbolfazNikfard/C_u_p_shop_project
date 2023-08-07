@@ -1,9 +1,9 @@
-﻿using Crops_Shop_Project.Data;
-using Crops_Shop_Project.Models;
+﻿using C_u_p_Shop_Project.Data;
+using C_u_p_Shop_Project.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Crops_Shop_Project.Components
+namespace C_u_p_Shop_Project.Components
 {
     public class ShowGroups : ViewComponent
     {
@@ -21,7 +21,7 @@ namespace Crops_Shop_Project.Components
                 groupName = g.Name,
                 subGroops = g.subGroups.ToList()
             }).ToList();
-            var viewAddress = "~/Views/Component/ShowGroups.cshtml";
+            string viewAddress = "~/Views/Component/ShowGroups.cshtml";
             if (whichView == "Responsive")
                 viewAddress = "~/Views/Component/ShowGroupsResponsive.cshtml";
             else if (whichView == "Sidebar")

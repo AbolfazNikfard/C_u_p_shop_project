@@ -1,7 +1,7 @@
-﻿using Crops_Shop_Project.Models;
+﻿using C_u_p_Shop_Project.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace Crops_Shop_Project.Data
+namespace C_u_p_Shop_Project.Data
 {
     public class DbInitializer
     {
@@ -40,12 +40,6 @@ namespace Crops_Shop_Project.Data
                         };
                         var role = new List<IdentityRole>()
                         {
-
-                            // new IdentityRole()
-                            // {
-                            //     Name = "Seller",
-                            //     NormalizedName = "SELLER"
-                            // },
                             new IdentityRole()
                             {
                                 Name = "Buyer",
@@ -66,7 +60,6 @@ namespace Crops_Shop_Project.Data
                     }
                     context.SaveChanges();
                 }
-
             }
         }
     }

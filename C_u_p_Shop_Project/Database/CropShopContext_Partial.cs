@@ -1,9 +1,9 @@
-﻿using Crops_Shop_Project.Enum;
-using Crops_Shop_Project.Models;
+﻿using C_u_p_Shop_Project.Enum;
+using C_u_p_Shop_Project.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Crops_Shop_Project.Data
+namespace C_u_p_Shop_Project.Data
 {
     public partial class CropsShopContext
     {

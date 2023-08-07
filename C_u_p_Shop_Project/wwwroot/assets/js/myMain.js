@@ -5,13 +5,23 @@ $("body").on("click", ".ec_qtybtn", function () {
     let t = $(this),
         o = t.parent().find("input").val();
     let s = o;
-    if ("+" === t.text() && o < 100)
+    if ("+" === t.text() && o < 99)
         s = parseFloat(o) + 1;
     else if ("-" === t.text() && o > 1)
         s = parseFloat(o) - 1;
 
     t.parent().find("input").val(s)
 });
+$(".cart-qty-plus-minus .ec_cart_qtybtn .ec_qtybtn").on("click", function () {
+    let t = $(this),
+        o = t.parent().parent().find("input").val();
+    let s = o;
+    if ("+" === t.text() && o < 99)
+        s = parseFloat(o) + 1;
+    else if ("-" === t.text() && o > 1)
+        s = parseFloat(o) - 1;
+    t.parent().parent().find("input").val(s)
+})
 $(document).on("click", ".btn-grid", function (t) {
     let o = $(".shop-pro-inner"),
         s = $(".pro-gl-content");

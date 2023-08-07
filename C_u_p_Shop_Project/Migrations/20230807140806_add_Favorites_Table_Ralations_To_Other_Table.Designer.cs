@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CropsShopProject.Migrations
 {
     [DbContext(typeof(CropsShopContext))]
-    [Migration("20230803165851_Initial_Database")]
-    partial class InitialDatabase
+    [Migration("20230807140806_add_Favorites_Table_Ralations_To_Other_Table")]
+    partial class addFavoritesTableRalationsToOtherTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,11 +50,11 @@ namespace CropsShopProject.Migrations
 
             modelBuilder.Entity("C_u_p_Shop_Project.Models.Cart", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Number")
                         .HasColumnType("int");
@@ -65,7 +65,7 @@ namespace CropsShopProject.Migrations
                     b.Property<int>("productId")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("buyerId");
 
@@ -98,6 +98,21 @@ namespace CropsShopProject.Migrations
                     b.HasIndex("productId");
 
                     b.ToTable("comments");
+                });
+
+            modelBuilder.Entity("C_u_p_Shop_Project.Models.Favorite", b =>
+                {
+                    b.Property<int>("buyerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("productId")
+                        .HasColumnType("int");
+
+                    b.HasKey("buyerId", "productId");
+
+                    b.HasIndex("productId");
+
+                    b.ToTable("favorites");
                 });
 
             modelBuilder.Entity("C_u_p_Shop_Project.Models.Group", b =>
@@ -473,6 +488,25 @@ namespace CropsShopProject.Migrations
                         .HasForeignKey("productId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("product");
+                });
+
+            modelBuilder.Entity("C_u_p_Shop_Project.Models.Favorite", b =>
+                {
+                    b.HasOne("C_u_p_Shop_Project.Models.Buyer", "buyer")
+                        .WithMany()
+                        .HasForeignKey("buyerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("C_u_p_Shop_Project.Models.Product", "product")
+                        .WithMany()
+                        .HasForeignKey("productId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("buyer");
 
                     b.Navigation("product");
                 });

@@ -1,10 +1,10 @@
 ﻿
-using Crops_Shop_Project.Enum;
+using C_u_p_Shop_Project.Enum;
 using NuGet.Protocol.Plugins;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Crops_Shop_Project.Models
+namespace C_u_p_Shop_Project.Models
 {
     public class Product
     {

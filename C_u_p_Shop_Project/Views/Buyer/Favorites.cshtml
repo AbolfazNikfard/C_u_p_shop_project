@@ -1,0 +1,88 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "لیست علاقه مندیها";
+}
+<!-- Ec breadcrumb start -->
+<div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row ec_breadcrumb_inner">
+                    <div class="col-md-6 col-sm-12">
+                        <h2 class="ec-breadcrumb-title">علاقه مندی ها</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Ec breadcrumb end -->
+<!-- User history section -->
+<section class="ec-page-content ec-vendor-uploads ec-user-account wishlist-2 section-space-p">
+    <div class="container">
+        <div class="row">
+            <partial name="_buyerSidbarPanel"></partial>
+            <div class="ec-shop-rightside col-lg-9 col-md-12">
+                <div class="ec-vendor-dashboard-card">
+                    <div class="ec-vendor-card-header">
+                        <h5>علاقه‌مندیها</h5>
+                    </div>
+                    <div class="ec-vendor-card-body">
+                        @if (Model.Count == 0)
+                        {
+                            <h4>شما علاقه مندی ندارید</h4>
+                        }
+                        else
+                        {
+                            <div class="ec-vendor-card-table">
+                                <table class="table ec-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">شناسه</th>
+                                            <th scope="col">تصویر</th>
+                                            <th scope="col">نام</th>
+                                            <th scope="col">قیمت</th>
+                                            <th scope="col">وضعیت</th>
+                                            <th scope="col">اقدامات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="wish-empt">
+                                        @foreach (var product in Model)
+                                        {
+                                            <tr class="pro-gl-content">
+                                                <th scope="row"><span>@product.id</span></th>
+                                                <td>
+                                                    <img class="prod-img" src="~/assets/images/product-image/@(product.productImage)"
+                                                         alt="تصویر محصول">
+                                                </td>
+                                                <td><span>@product.Name</span></td>
+                                                <td><span>@product.Price</span></td>
+                                                @if (product.Stock != 0)
+                                                {
+                                                    <td><span class="avl">موجود</span></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><span class="dis">ناموجود</span></td>
+                                                }
+                                                <td>
+                                                    <span class="tbl-btn">
+                                                        <a href="/Product/ProductDetails?productId=@product.id" class="btn btn-lg btn-primary" title="مشاهده">
+                                                            <img src="~/assets/images/icons/quickview.svg" class="svg_img pro_svg" alt="Watch">
+                                                        </a>
+                                                        <a href="/Buyer/DeleteItemFromFavorites/?itemId=@product.id" class="btn btn-lg btn-primary ec-com-remove ec-remove-wish" title="حذف">×</a>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

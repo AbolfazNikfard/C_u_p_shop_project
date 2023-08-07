@@ -73,13 +73,14 @@
                                         </div>
                                         <div class="ec-single-stoke">
                                             @*<span class="ec-single-ps-title">در انبار</span>*@
-                                            <span class="ec-single-sku">شناسه محصول: @Model.product.id#</span>
+                                            <span class="ec-single-sku">شناسه محصول: #@Model.product.id</span>
                                             <input id="productIdSection" type="hidden" value="@Model.product.id" />
                                         </div>
                                     </div>
 
                                     @if (SignInManager.IsSignedIn(User))
                                     {
+                                        <span id="UserIdentityName" style="display:none">@User.Identity.Name</span>
                                         if (User.IsInRole("Buyer"))
                                         {
                                             @if (Model.product.Stock >= 10)
@@ -92,12 +93,12 @@
                                                         <div class="inc ec_qtybtn">+</div>
                                                     </div>
 
-                                                    <div class="ec-single-cart ">
+                                                    <div class="ec-single-cart">
                                                         <button id="addToCart-submit-btn" class="btn btn-primary">افزودن به سبد خرید</button>
                                                     </div>
 
                                                     <div class="ec-single-wishlist">
-                                                        <a class="ec-btn-group wishlist" title="علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
+                                                        <a href="/Buyer/AddItemToFavorites?itemId=@Model.product.id" class="ec-btn-group wishlist" title="علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
                                                     </div>
 
                                                 </div>
@@ -108,7 +109,7 @@
 
                                                     <div class="qty-plus-minus">
                                                         <div class="dec ec_qtybtn">-</div>
-                                                        <input class="qty-input" type="text" maxlength="2" value="1" readonly>
+                                                        <input id="input-quantity" class="qty-input" type="text" maxlength="2" value="1" readonly>
                                                         <div class="inc ec_qtybtn">+</div>
                                                     </div>
                                                     <div class="ec-single-cart ">
@@ -116,7 +117,7 @@
                                                     </div>
 
                                                     <div class="ec-single-wishlist">
-                                                        <a class="ec-btn-group wishlist" title="علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
+                                                        <a href="/Buyer/AddItemToFavorites?itemId=@Model.product.id" class="ec-btn-group wishlist" title="علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
                                                     </div>
                                                 </div>
                                                 <b><span style="color: red;">تنها @Model.product.Stock عدد در انبار باقیمانده است</span></b>
@@ -137,12 +138,13 @@
                                     }
                                     else
                                     {
+                                        <span id="UserIdentityName" style="display:none"></span>
                                         <div class="ec-single-qty">
                                             @if (Model.product.Stock >= 10)
                                             {
                                                 <div class="qty-plus-minus">
                                                     <div class="dec ec_qtybtn">-</div>
-                                                    <input class="qty-input" type="text" maxlength="2" value="1">
+                                                    <input id="input-quantity" class="qty-input" type="text" maxlength="2" value="1">
                                                     <div class="inc ec_qtybtn">+</div>
                                                 </div>
                                                 <div class="ec-single-cart ">
@@ -150,7 +152,7 @@
                                                 </div>
 
                                                 <div class="ec-single-wishlist">
-                                                    <a class="ec-btn-group wishlist" title="علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
+                                                    <a href="/Buyer/AddItemToFavorites?itemId=@Model.product.id" class="ec-btn-group wishlist" title="علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
                                                 </div>
 
                                             }
@@ -160,7 +162,7 @@
 
                                                     <div class="qty-plus-minus">
                                                         <div class="dec ec_qtybtn">-</div>
-                                                        <input class="qty-input" type="text" maxlength="2" value="1" readonly>
+                                                        <input id="input-quantity" class="qty-input" type="text" maxlength="2" value="1" readonly>
                                                         <div class="inc ec_qtybtn">+</div>
                                                     </div>
 
@@ -169,7 +171,7 @@
                                                     </div>
 
                                                     <div class="ec-single-wishlist">
-                                                        <a class="ec-btn-group wishlist" title="علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
+                                                        <a href="/Buyer/AddItemToFavorites?itemId=@Model.product.id" class="ec-btn-group wishlist" title="علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
                                                     </div>
                                                 </div>
 
@@ -288,5 +290,5 @@
         </div>
     </div>
 </section>
-<script src="~/assets/js/plugins/addToCart.js?version=6"></script>
+<script src="~/assets/js/plugins/addToCart.js?version=10"></script>
 

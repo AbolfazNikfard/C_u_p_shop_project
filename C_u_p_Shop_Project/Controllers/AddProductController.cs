@@ -1,14 +1,13 @@
-﻿using Crops_Shop_Project.Models.View_Models;
-using Crops_Shop_Project.Models;
+﻿using C_u_p_Shop_Project.Models.View_Models;
+using C_u_p_Shop_Project.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Crops_Shop_Project.Data;
+using C_u_p_Shop_Project.Data;
 using Microsoft.AspNetCore.Identity;
-using Crops_Shop_Project.Enum;
-using Crops_Shop_Project.Shared;
+using C_u_p_Shop_Project.Shared;
 
-namespace Crops_Shop_Project.Controllers
+namespace C_u_p_Shop_Project.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class AddProductController : Controller
@@ -23,36 +22,44 @@ namespace Crops_Shop_Project.Controllers
         }
         #region AddProduct
         [HttpGet]
-        public async Task<IActionResult> addProduct(int? productId, string message)
+        public IActionResult addProduct(int? productId, string message)
         {
-            if (message == null) { return NotFound(); }
-            ViewData["Message"] = message;
-            Product product;
-            if (productId == null)
-                product = new Product();
-            else
+            try
             {
-                product = _context.products.SingleOrDefault(p => p.id == productId);
-                if (product == null) { return NotFound(); }
-            }
-            var groupsAndSubGroups = _context.groups.Include(g => g.subGroups)
-                .Select(g => new GroupAndSubGroupViewModel
+                if (message == null) { return NotFound(); }
+                ViewData["Message"] = message;
+                Product product;
+                if (productId == null)
+                    product = new Product();
+                else
                 {
-                    groupId = g.id,
-                    groupName = g.Name,
-                    subGroops = g.subGroups.ToList()
-                }).ToList();
+                    product = _context.products.SingleOrDefault(p => p.id == productId);
+                    if (product == null) { return NotFound(); }
+                }
+                var groupsAndSubGroups = _context.groups.Include(g => g.subGroups)
+                    .Select(g => new GroupAndSubGroupViewModel
+                    {
+                        groupId = g.id,
+                        groupName = g.Name,
+                        subGroops = g.subGroups.ToList()
+                    }).ToList();
 
-            AddProductViewModel addProduct = new AddProductViewModel
+                AddProductViewModel addProduct = new AddProductViewModel
+                {
+                    groupAndSubGroups = groupsAndSubGroups,
+                    product = product
+
+                };
+                return View(addProduct);
+            }
+            catch (Exception e)
             {
-                groupAndSubGroups = groupsAndSubGroups,
-                product = product
-
-            };
-            return View(addProduct);
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
+            }
         }
         [HttpPost]
-        public async Task<IActionResult> addProduct(AddProductViewModel addProduct, string message)
+        public IActionResult addProduct([FromForm] AddProductViewModel addProduct, string message)
         {
             ViewData["Message"] = message;
             try
@@ -68,7 +75,7 @@ namespace Crops_Shop_Project.Controllers
 
                 var subGroup = _context.subGroups.Where(s => s.id == addProduct.product.subGroupId).SingleOrDefault();
                 int ParentGroupId = 0;
-                if (subGroup != null) { ParentGroupId = subGroup.parentGroupId; }
+                if (subGroup != null) ParentGroupId = subGroup.parentGroupId;
                 var group = _context.groups.SingleOrDefault(g => g.id == addProduct.product.groupId);
 
                 #region FormValidation
@@ -132,8 +139,8 @@ namespace Crops_Shop_Project.Controllers
             }
             catch (Exception e)
             {
-                ModelState.AddModelError("", $"مشکل {e} در ثبت محصول پیش آمده است");
-                return View(addProduct);
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
             }
         }
         #endregion
@@ -144,31 +151,55 @@ namespace Crops_Shop_Project.Controllers
         }
         public IActionResult DeleteProduct(int productId)
         {
-            var product = _context.products.SingleOrDefault(p => p.id == productId);
-            if (product == null) { return NotFound(); }
-            product.IsDelete = true;
-            _context.products.Update(product);
-            _context.SaveChanges();
-            return RedirectToAction("ProductList", "AddProduct");
+            try
+            {
+                var product = _context.products.SingleOrDefault(p => p.id == productId);
+                if (product == null) { return NotFound(); }
+                product.IsDelete = true;//soft delete
+                _context.products.Update(product);
+                _context.SaveChanges();
+                return RedirectToAction("ProductList", "AddProduct");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
+            }
         }
         #endregion
         public IActionResult ShowProduct(int productId)
         {
-            var product = _context.products.IgnoreQueryFilters().SingleOrDefault(p => p.id == productId);
-            if (product == null) { return NotFound(); }
-            var comments = _context.comments.Where(c => c.productId == productId).ToList();
-            ProductDetailViewModel model = new ProductDetailViewModel
+            try
             {
-                product = product,
-                comments = comments
-            };
-            return View(model);
+                var product = _context.products.IgnoreQueryFilters().SingleOrDefault(p => p.id == productId);
+                if (product == null) { return NotFound(); }
+                var comments = _context.comments.Where(c => c.productId == productId).ToList();
+                ProductDetailViewModel model = new ProductDetailViewModel
+                {
+                    product = product,
+                    comments = comments
+                };
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
+            }
         }
         public async Task<IActionResult> ProductList()
         {
-            List<Product> productList;
-            productList = _context.products.ToList();
-            return View(productList);
+            try
+            {
+                List<Product> productList;
+                productList = _context.products.ToList();
+                return View(productList);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
+            }
         }
     }
 }

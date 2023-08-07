@@ -1,4 +1,4 @@
-namespace Crops_Shop_Project.Models
+namespace C_u_p_Shop_Project.Models
 {
     public class ErrorViewModel
     {

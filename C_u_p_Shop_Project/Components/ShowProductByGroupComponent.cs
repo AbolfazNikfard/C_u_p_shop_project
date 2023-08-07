@@ -1,10 +1,8 @@
-﻿using Crops_Shop_Project.Data;
-using Crops_Shop_Project.Models;
+﻿using C_u_p_Shop_Project.Data;
+using C_u_p_Shop_Project.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.VisualBasic.Syntax;
-using Microsoft.EntityFrameworkCore;
 
-namespace Crops_Shop_Project.Components
+namespace C_u_p_Shop_Project.Components
 {
     public class ShowProductByGroupComponent : ViewComponent
     {

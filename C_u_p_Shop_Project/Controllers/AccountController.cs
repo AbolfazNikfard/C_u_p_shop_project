@@ -1,10 +1,9 @@
-﻿using Crops_Shop_Project.Data;
-using Crops_Shop_Project.Models;
+﻿using C_u_p_Shop_Project.Data;
+using C_u_p_Shop_Project.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
-namespace Crops_Shop_Project.Controllers
+namespace C_u_p_Shop_Project.Controllers
 {
     public class AccountController : Controller
     {
@@ -27,7 +26,7 @@ namespace Crops_Shop_Project.Controllers
         {
             if (_signInManager.IsSignedIn(User))
             {
-                if (User.IsInRole("Buyer")) //|| User.IsInRole("Seller"))
+                if (User.IsInRole("Buyer"))
                     return RedirectToAction("Index", "Home");
                 else
                     return RedirectToAction("Index", "Admin");
@@ -36,10 +35,17 @@ namespace Crops_Shop_Project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register([FromForm] RegisterViewModel model)
         {
             try
             {
+                if (_signInManager.IsSignedIn(User))
+                {
+                    if (User.IsInRole("Buyer"))
+                        return RedirectToAction("Index", "Home");
+                    else
+                        return RedirectToAction("Index", "Admin");
+                }
                 if (ModelState.IsValid)
                 {
                     var user = new User()
@@ -54,24 +60,7 @@ namespace Crops_Shop_Project.Controllers
                     if (createUserresult.Succeeded)
                     {
                         var addUser = await _userManager.FindByNameAsync(model.Email);
-                        // if(model.role == true)
-                        // {
-                        //     Seller seller = new Seller()
-                        //     {
-                        //         userId = addUser.Id
-                        //     };
-                        //     var addToRoleResult = await _userManager.AddToRoleAsync(user, "seller");
 
-                        //     if (!addToRoleResult.Succeeded)
-                        //     {
-                        //         ModelState.AddModelError("", "در ثبت نام مشکلی پیش آمده است لطفا مجددا امتحان کنید");
-                        //         return View(model);
-                        //     }
-                        //     _context.sellers.Add(seller);
-                        //     _context.SaveChanges();
-                        // }
-                        // else
-                        // {
                         Buyer buyer = new Buyer()
                         {
                             userId = addUser.Id
@@ -98,8 +87,8 @@ namespace Crops_Shop_Project.Controllers
             }
             catch (Exception e)
             {
-                ModelState.AddModelError("", $"مشکل {e} در ثبت نام پیش آمده است");
-                return View(model);
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
             }
         }
         [HttpGet]
@@ -109,8 +98,6 @@ namespace Crops_Shop_Project.Controllers
             {
                 if (User.IsInRole("Buyer"))
                     return RedirectToAction("Index", "Home");
-                // else if (User.IsInRole("Seller"))
-                //     return RedirectToAction("Index", "Seller");
                 else
                     return RedirectToAction("Index", "Admin");
             }
@@ -121,9 +108,8 @@ namespace Crops_Shop_Project.Controllers
             ViewData["Message"] = message;
             return View();
         }
-        //[Route("Account/Login/(message?)/returnUrl?")]
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model, string? message, string? returnUrl)
+        public async Task<IActionResult> Login([FromForm] LoginViewModel model, string? message, string? returnUrl)
         {
             try
             {
@@ -131,8 +117,6 @@ namespace Crops_Shop_Project.Controllers
                 {
                     if (User.IsInRole("Buyer"))
                         return RedirectToAction("Index", "Home");
-                    // else if (User.IsInRole("Seller"))
-                    //     return RedirectToAction("Index", "Seller");
                     else
                         return RedirectToAction("Index", "Admin");
                 }
@@ -158,8 +142,6 @@ namespace Crops_Shop_Project.Controllers
                         var roleName = await _userManager.GetRolesAsync(user);
                         if (roleName[0] == "Buyer")
                             return RedirectToAction("Index", "Home");
-                        // else if (roleName[0] == "Seller")
-                        //     return RedirectToAction("Index", "Seller");
                         else
                             return RedirectToAction("Index", "Admin");
                     }
@@ -176,8 +158,8 @@ namespace Crops_Shop_Project.Controllers
             }
             catch (Exception e)
             {
-                ModelState.AddModelError("", $"مشکل {e} در ورود پیش آمده است");
-                return View(model);
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
             }
         }
 
@@ -185,15 +167,31 @@ namespace Crops_Shop_Project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOut()
         {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            try
+            {
+                await _signInManager.SignOutAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
+            }
         }
 
         public async Task<IActionResult> IsEmailInUse(string email)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null) return Json(true);
-            return Json("ایمیل وارد شده از قبل موجود است");
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(email);
+                if (user == null) return Json(true);
+                return Json("ایمیل وارد شده از قبل موجود است");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
+            }
         }
     }
 }

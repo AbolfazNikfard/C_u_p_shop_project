@@ -1,4 +1,4 @@
-﻿namespace Crops_Shop_Project.Enum
+﻿namespace C_u_p_Shop_Project.Enum
 {
     public enum UnitOFMassMeasurement
     {

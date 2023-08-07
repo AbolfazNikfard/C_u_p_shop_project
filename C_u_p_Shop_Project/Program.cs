@@ -1,6 +1,6 @@
-using Crops_Shop_Project.Data;
-using Crops_Shop_Project.Models;
-using Crops_Shop_Project.PersianTranslationError;
+using C_u_p_Shop_Project.Data;
+using C_u_p_Shop_Project.Models;
+using C_u_p_Shop_Project.PersianTranslationError;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

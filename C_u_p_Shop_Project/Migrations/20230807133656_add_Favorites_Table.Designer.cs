@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CropsShopProject.Migrations
 {
     [DbContext(typeof(CropsShopContext))]
-    [Migration("20230803165851_Initial_Database")]
-    partial class InitialDatabase
+    [Migration("20230807133656_add_Favorites_Table")]
+    partial class addFavoritesTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,11 +50,11 @@ namespace CropsShopProject.Migrations
 
             modelBuilder.Entity("C_u_p_Shop_Project.Models.Cart", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Number")
                         .HasColumnType("int");
@@ -65,7 +65,7 @@ namespace CropsShopProject.Migrations
                     b.Property<int>("productId")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("buyerId");
 
@@ -98,6 +98,19 @@ namespace CropsShopProject.Migrations
                     b.HasIndex("productId");
 
                     b.ToTable("comments");
+                });
+
+            modelBuilder.Entity("C_u_p_Shop_Project.Models.Favorite", b =>
+                {
+                    b.Property<int>("buyerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("productId")
+                        .HasColumnType("int");
+
+                    b.HasKey("buyerId", "productId");
+
+                    b.ToTable("favorites");
                 });
 
             modelBuilder.Entity("C_u_p_Shop_Project.Models.Group", b =>

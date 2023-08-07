@@ -1,7 +1,6 @@
 ﻿@model List<Product>
 @{
     ViewData["Title"] = "محصولات";
-    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
     ulong ShowReadablePrice;
@@ -15,12 +14,6 @@
                         <h2 class="ec-breadcrumb-title">محصولات</h2>
                     </div>
                     <div class="col-md-6 col-sm-12">
-                        <!-- ec-breadcrumb-list start -->
-                        @*<ul class="ec-breadcrumb-list">
-                        <li class="ec-breadcrumb-item"><a href="index.html">خانه</a></li>
-                        <li class="ec-breadcrumb-item active">محصولات</li>
-                        </ul>*@
-                        <!-- ec-breadcrumb-list end -->
                     </div>
                 </div>
             </div>
@@ -41,8 +34,6 @@
                                 <button class="btn btn-list"><img src="~/assets/images/icons/list.svg" class="svg_img gl_svg" alt=""></button>
                             </div>
                         </div>
-                        @*<form asp-controller="Product" asp-action="ShowProductByFilter"  method="post">
-                    <input type="hidden" id="Products" name="Products" value="@Model" />*@
                         <div class="col-md-6 ec-sort-select">
 
                             <a><button type="submit"><img src="~/assets/images/icons/filter.svg" class="svg_img pro_svg" alt="اعمال فیلتر"></button></a>&nbsp
@@ -61,7 +52,6 @@
 
                             </div>
                         </div>
-                        @*</form>*@
                     </div>
                     <!-- Shop Top End -->
                     <!-- Shop content Start -->
@@ -70,7 +60,6 @@
                             <div class="row">
                                 @foreach (var product in Model)
                                 {
-
                                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
                                         <div class="ec-product-inner">
                                             <div class="ec-pro-image-outer">
@@ -79,14 +68,14 @@
                                                         <img style="width:231px;height:257px" class="main-image" src="~/assets/images/product-image/@(product.productImage)">
                                                     </a>
 
-                                                    <a asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@product.id" class="quickview" title="مشاهده محصول"><img src="~/assets/images/icons/quickview.svg" class="svg_img pro_svg" alt=""></a>
+                                                    <a asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@product.id" class="quickview" title="مشاهده محصول"><img src="~/assets/images/icons/quickview.svg" class="svg_img pro_svg" alt="Watch"></a>
                                                     <div class="ec-pro-actions">
-                                                        <a href="#" class="ec-btn-group compare" title=""><img src="~/assets/images/icons/compare.svg" class="svg_img pro_svg" alt=""></a>
+                                                        <a class="ec-btn-group compare" title=""><img src="~/assets/images/icons/compare.svg" class="svg_img pro_svg" alt=""></a>
                                                         @if (product.Stock > 0)
                                                         {
-                                                            <a asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@product.id" title="خرید" class="add-to-cart"><img src="~/assets/images/icons/cart.svg" class="svg_img pro_svg" alt=""></a>
+                                                            <a asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@product.id" title="خرید" class="add-to-cart"><img src="~/assets/images/icons/cart.svg" class="svg_img pro_svg" alt="BuySvg"></a>
                                                         }
-                                                        <a class="ec-btn-group wishlist" title=" افزودن به علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
+                                                        <a href="/Buyer/AddItemToFavorites?itemId=@product.id" class="ec-btn-group wishlist" title=" افزودن به علاقه مندی"><img src="~/assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt=""></a>
                                                     </div>
                                                 </div>
                                             </div>

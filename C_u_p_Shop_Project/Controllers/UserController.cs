@@ -1,13 +1,13 @@
-﻿using Crops_Shop_Project.Models;
-using Crops_Shop_Project.Models.View_Models;
-using Crops_Shop_Project.Shared;
+﻿using C_u_p_Shop_Project.Models;
+using C_u_p_Shop_Project.Models.View_Models;
+using C_u_p_Shop_Project.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.DotNet.Scaffolding.Shared.Project;
 
-namespace Crops_Shop_Project.Controllers
+namespace C_u_p_Shop_Project.Controllers
 {
     [Authorize(Roles = "Buyer")] //[Authorize(Roles = "Seller,Buyer")]
     public class UserController : Controller
@@ -169,8 +169,8 @@ namespace Crops_Shop_Project.Controllers
             }
             catch (Exception e)
             {
-                ModelState.AddModelError("", "مشکلی در سمت سرور پیش آمده است لطفا بعدا مجددا تلاش کنید");
-                return View("~/Views/Buyer/ChangePass.cshtml", model);
+                Console.WriteLine($"Catched Error: {e.Message}");
+                return StatusCode(500);
             }
         }
     }

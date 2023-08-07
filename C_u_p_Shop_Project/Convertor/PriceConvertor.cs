@@ -1,4 +1,4 @@
-﻿namespace Crops_Shop_Project.Convertor
+﻿namespace C_u_p_Shop_Project.Convertor
 {
     public static class PriceConvertor
     {
