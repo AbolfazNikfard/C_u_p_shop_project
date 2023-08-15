@@ -365,6 +365,20 @@ FodyWeavers.xsd
 *.svg
 
 /C_u_p_Shop_Project/wwwroot/assets/images/product-image/*.jpg
+/C_u_p_Shop_Project/wwwroot/assets/images/product-image/*.png
+/C_u_p_Shop_Project/wwwroot/assets/images/product-image/*.gif
+
 /C_u_p_Shop_Project/wwwroot/assets/images/user-image/*.jpg
+/C_u_p_Shop_Project/wwwroot/assets/images/user-image/*.png
+/C_u_p_Shop_Project/wwwroot/assets/images/user-image/*.gif
+
+/wwwroot/assets/images/product-image/*.jpg
+/wwwroot/assets/images/product-image/*.png
+/wwwroot/assets/images/product-image/*.gif
+
+/wwwroot/assets/images/user-image/*.jpg
+/wwwroot/assets/images/user-image/*.png
+/wwwroot/assets/images/user-image/*.gif
+
 
 
