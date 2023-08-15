@@ -44,10 +44,10 @@ namespace C_u_p_Shop_Project.Data
             .HasForeignKey<Buyer>(b => b.userId);
             modelBuilder.Entity<Favorite>()
                 .HasKey(f => new { f.buyerId, f.productId });
-            //     modelBuilder.Entity<User>()
-            //    .HasOne(b => b.seller)
-            //    .WithOne(i => i.user)
-            //    .HasForeignKey<Seller>(b => b.userId);
+           // modelBuilder.Entity<User>()
+           //.HasOne(b => b.seller)
+           //.WithOne(i => i.user)
+           //.HasForeignKey<Seller>(b => b.userId);
             //modelBuilder.Entity<IdentityRole>().HasData(
             //    new IdentityRole { Id = "e1737af7-cabd-4ba2-8385-49b1b1fea747", Name = "Buyer", NormalizedName = "BUYER" },
             //    new IdentityRole { Id = "51be3cb7-179c-409e-8171-3ade8ef31752", Name = "Seller", NormalizedName = "SELLER" },

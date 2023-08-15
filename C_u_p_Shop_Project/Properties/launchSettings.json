@@ -14,7 +14,12 @@
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7260;http://localhost:5048",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DB_CONNECTION_STRING": "Data Source=DESKTOP-QDE3PR6;Initial Catalog=C_u_p_Shop_DB;Trust Server Certificate=True;Integrated Security=False;User ID=sa;Password=1378529",
+        "DB_NAME": "C_u_p_Shop_DB",
+        "DB_SOURCE": "DESKTOP-QDE3PR6",
+        "DB_USER": "sa",
+        "DB_PASSWORD": "1378529"
       }
     },
     "IIS Express": {
