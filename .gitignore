@@ -364,7 +364,7 @@ FodyWeavers.xsd
 
 *.svg
 
-/wwwroot/assets/images/product-image/
-/wwwroot/assets/images/user-image/
+/C_u_p_Shop_Project/wwwroot/assets/images/product-image/*.jpg
+/C_u_p_Shop_Project/wwwroot/assets/images/user-image/*.jpg
 
 
