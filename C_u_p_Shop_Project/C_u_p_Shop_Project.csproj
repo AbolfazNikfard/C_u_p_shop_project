@@ -23,8 +23,5 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="wwwroot\assets\images\user-image\" />
-	</ItemGroup>
 
 </Project>
