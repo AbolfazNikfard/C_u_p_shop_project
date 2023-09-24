@@ -75,7 +75,7 @@
                         if (closeButton.classList.contains("success"))
                             closeButton.classList.remove("success");
                         closeButton.classList.add("error");
-                        messageBoxText.innerText = "تعداد کالا وارد شده بیش از حد مجاز است";
+                        messageBoxText.innerText = "تعداد کالا مجاز برای خرید دارای محدودیت است";
                         showMessage();
                     }
                     else if (data.message === "Stock not enough") {

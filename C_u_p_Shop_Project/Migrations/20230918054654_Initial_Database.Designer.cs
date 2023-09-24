@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CupShopProject.Migrations
 {
     [DbContext(typeof(CropsShopContext))]
-    [Migration("20230815193905_initial_Database")]
-    partial class initialDatabase
+    [Migration("20230918054654_Initial_Database")]
+    partial class InitialDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

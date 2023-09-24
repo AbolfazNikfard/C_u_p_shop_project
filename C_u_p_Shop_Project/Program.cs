@@ -3,7 +3,6 @@ using C_u_p_Shop_Project.Models;
 using C_u_p_Shop_Project.PersianTranslationError;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -17,8 +16,7 @@ string connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRI
 
 services.AddDbContext<CropsShopContext>(options =>
 {
-    options.UseSqlServer(connectionString,
-                       options => options.EnableRetryOnFailure());
+    options.UseSqlServer(connectionString);
 });
 
 

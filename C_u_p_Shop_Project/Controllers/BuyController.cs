@@ -72,7 +72,7 @@ namespace C_u_p_Shop_Project.Controllers
                     }
                     else
                     {
-                        if (cartItem.Number + quntity >= 1000)
+                        if (cartItem.Number + quntity >= 6)
                             return Ok(new { message = "Too large" });
                         cartItem.Number += quntity;
                         _context.carts.Update(cartItem);
@@ -136,6 +136,11 @@ namespace C_u_p_Shop_Project.Controllers
                         ModelState.AddModelError("", "موجودی محصول با شناسه " + products[i].id + " کافی نیست");
                         return View(carts);
                     }
+                    if (result > 5)
+                    {
+                        ModelState.AddModelError("", "تعداد محصول وارد شده با شناسه " + products[i].id + " بیش از حد مجاز است");
+                        return View(carts);
+                    }
                 }
                 #endregion
                 var user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -185,7 +190,7 @@ namespace C_u_p_Shop_Project.Controllers
                 var buyerCart = _context.carts.Where(c => c.buyerId == buyer.id)
                     .Include(c => c.product)
                     .ToList();
-                
+
                 List<Order> orders = new List<Order>();
                 for (int i = 0; i < buyerCart.Count; i++)
                 {

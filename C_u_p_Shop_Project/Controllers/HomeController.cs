@@ -26,12 +26,12 @@ namespace C_u_p_Shop_Project.Controllers
             IQueryable<Product> products;
             if (search != null)
             {
-                products = _context.products.Where(p => p.Name.StartsWith(search));
-                productCount = (double)_context.products.Where(p => p.Name.StartsWith(search)).Count();
+                products = _context.products.Where(p => p.Name.Contains(search));
+                productCount = (double)_context.products.Where(p => p.Name.Contains(search)).Count();
             }
             else
             {
-                products = products = _context.products;
+                products = _context.products;
                 productCount = (double)_context.products.Count();
             }
 
